@@ -23,18 +23,27 @@ interface Props extends Callbacks {
     size: number;
 }
 
-export default function Webcam({ interval, capture, disable, direct, hidden, size, ...props }: Props) {
+export default function Webcam({
+    interval,
+    capture,
+    disable,
+    direct,
+    hidden,
+    size,
+    onActivated,
+    onFatal,
+    onPostprocess,
+    onCapture,
+    onPreprocess,
+}: Props) {
     const { t } = useTranslation();
     const [webcam, setWebcam] = useState<WebcamClass | null>(null);
     const webcamRef = useRef<HTMLCanvasElement>(null);
     const requestRef = useRef(-1);
     const previousTimeRef = useRef(0);
     const loopRef = useRef<(n: number) => Promise<void>>();
-    const callbacks = useRef<Callbacks>({});
     const [multiple, setMultiple] = useState(false);
     const [facing, setFacing] = useState(false);
-
-    callbacks.current = props;
 
     const actualSize = Math.floor(size);
 
@@ -50,13 +59,13 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
                 webcam.update();
                 const actualInterval = interval !== undefined ? interval : 1000.0;
 
-                if (callbacks.current.onPreprocess) {
-                    await callbacks.current.onPreprocess(webcam.canvas);
+                if (onPreprocess) {
+                    await onPreprocess(webcam.canvas);
                 }
 
-                if (capture && callbacks.current.onCapture && timestamp - previousTimeRef.current >= actualInterval) {
+                if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
                     if (direct && webcam.canvas) {
-                        await callbacks.current.onCapture(webcam.canvas);
+                        await onCapture(webcam.canvas);
                     } else {
                         const newImage = document.createElement('canvas');
                         newImage.width = webcam.canvas.width;
@@ -64,7 +73,7 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
                         const context = newImage.getContext('2d');
                         if (!context) console.error('Failed to get context');
                         context?.drawImage(webcam.canvas, 0, 0);
-                        await callbacks.current.onCapture(newImage);
+                        await onCapture(newImage);
                     }
                     previousTimeRef.current = timestamp;
                 }
@@ -72,8 +81,8 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
                 const ctx = webcamRef.current?.getContext('2d');
                 if (ctx) {
                     ctx.drawImage(webcam.canvas, 0, 0);
-                    if (callbacks.current.onPostprocess && webcamRef.current) {
-                        await callbacks.current.onPostprocess(webcamRef.current);
+                    if (onPostprocess && webcamRef.current) {
+                        await onPostprocess(webcamRef.current);
                     }
                 }
             }
@@ -86,7 +95,7 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
         if (requestRef.current === -1) {
             requestRef.current = window.requestAnimationFrame(loopRef.current);
         }
-    }, [webcam, interval, capture, direct, disable]);
+    }, [webcam, interval, capture, direct, disable, onCapture, onPreprocess, onPostprocess]);
 
     const initWebcam = useCallback(
         async (newWebcam: WebcamClass) => {
@@ -112,10 +121,10 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
                 }
             }
 
-            if (callbacks.current.onActivated) callbacks.current.onActivated(true);
+            if (onActivated) onActivated(true);
             return newWebcam;
         },
-        [facing, multiple]
+        [facing, multiple, onActivated]
     );
 
     useEffect(() => {
@@ -125,16 +134,16 @@ export default function Webcam({ interval, capture, disable, direct, hidden, siz
     useEffect(() => {
         const camera = new WebcamClass(actualSize, actualSize, true);
         initWebcam(camera).catch((e) => {
-            if (callbacks.current.onActivated) callbacks.current.onActivated(false);
+            if (onActivated) onActivated(false);
             console.error('No webcam', e);
-            if (callbacks.current.onFatal) callbacks.current.onFatal();
+            if (onFatal) onFatal();
         });
         return () => {
             if (camera.webcam?.srcObject) {
                 camera.stop();
             }
         };
-    }, [facing, initWebcam, actualSize]);
+    }, [facing, initWebcam, actualSize, onActivated, onFatal]);
 
     useEffect(() => {
         return () => {
