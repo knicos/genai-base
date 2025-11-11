@@ -15,12 +15,13 @@ const FAILURE_TIMEOUT = 60000;
 
 interface Props {
     api: string;
+    checkURL?: string;
     appName: string;
     visibility?: number;
     noCheck?: boolean;
 }
 
-export default function ConnectionStatus({ api, appName, visibility, noCheck }: Props) {
+export default function ConnectionStatus({ api, checkURL, appName, visibility, noCheck }: Props) {
     const { t } = useTranslation();
     const peer = usePeerObject();
     const [ice, setIce] = useAtom(iceConfig);
@@ -105,12 +106,11 @@ export default function ConnectionStatus({ api, appName, visibility, noCheck }: 
 
     useEffect(() => {
         if (ready && peer && !noCheck && peer.code) {
-            checkP2P(api, peer.code).then((res) => {
+            checkP2P(checkURL || api, peer.code).then((res) => {
                 setP2PCheck(res);
             });
         }
-    }, [ready, peer, api, noCheck]);
-
+    }, [ready, peer, api, checkURL, noCheck]);
     return (
         <>
             {(visibility === undefined || quality <= visibility) && (
