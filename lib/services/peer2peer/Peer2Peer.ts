@@ -106,7 +106,8 @@ export default class Peer2Peer<T extends PeerEvent> {
         this.server = server;
         this.code = code;
         this.host = host;
-        (this.secure = secure), (this.key = key || 'peerjs');
+        this.secure = secure;
+        this.key = key || 'peerjs';
         this.port = port || 443;
         this.ice = ice;
         this.relay = relay;
@@ -387,7 +388,7 @@ export default class Peer2Peer<T extends PeerEvent> {
                 this.retryTimeout = window.setTimeout(() => {
                     try {
                         this.peer.reconnect();
-                    } catch (e) {
+                    } catch {
                         this.setError('peer-not-found');
                     }
                 }, expBackoff(this.peerRetryCount++));

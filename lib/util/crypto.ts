@@ -43,11 +43,11 @@ export async function createAsym() {
                 ['encrypt', 'decrypt']
             );
             return {
-                encrypt: async (data: string): Promise<[ArrayBuffer, Uint8Array]> => {
-                    const iv = crypto.getRandomValues(new Uint8Array(12));
+                encrypt: async (data: string): Promise<[ArrayBuffer, ArrayBuffer]> => {
+                    const iv = crypto.getRandomValues(new Uint8Array(12)).buffer;
                     return [await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, stringToBuf(data)), iv];
                 },
-                decrypt: async (data: ArrayBuffer, iv: Uint8Array) => {
+                decrypt: async (data: ArrayBuffer, iv: ArrayBuffer) => {
                     return bufToString(await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, data));
                 },
             };

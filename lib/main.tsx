@@ -34,6 +34,7 @@ export { default as BusyButton } from './components/BusyButton/BusyButton';
 export { default as AlertPara } from './components/AlertPara/AlertPara';
 export { default as QRCode } from './components/QRCode/QRCode';
 export { default as Webcam } from './components/Webcam/Webcam';
+export { default as SidePanel } from './components/SidePanel/SidePanel';
 export { default as ContentLoader } from './components/ContentLoader/ContentLoader';
 export {
     WorkflowLayout,

@@ -14,11 +14,11 @@ export default class PeerConnection extends EventEmitter<'open' | 'data' | 'clos
     private _connType: PeerConnectionType = 'server';
     private pubKey?: string;
     private createCrypto?: (key: string) => Promise<{
-        encrypt: (data: string) => Promise<[ArrayBuffer, Uint8Array]>;
-        decrypt: (data: ArrayBuffer, iv: Uint8Array) => Promise<string>;
+        encrypt: (data: string) => Promise<[ArrayBuffer, ArrayBuffer]>;
+        decrypt: (data: ArrayBuffer, iv: ArrayBuffer) => Promise<string>;
     }>;
-    private encrypt?: (data: string) => Promise<[ArrayBuffer, Uint8Array]>;
-    private decrypt?: (data: ArrayBuffer, iv: Uint8Array) => Promise<string>;
+    private encrypt?: (data: string) => Promise<[ArrayBuffer, ArrayBuffer]>;
+    private decrypt?: (data: ArrayBuffer, iv: ArrayBuffer) => Promise<string>;
     private queue?: string[];
     private connectTimeout = -1;
     public readonly initiated: boolean;
@@ -215,9 +215,9 @@ export default class PeerConnection extends EventEmitter<'open' | 'data' | 'clos
             const dIv = await base64ToBytes(d.iv);
 
             try {
-                const decrypted = await this.decrypt(new Uint8Array(dBuf), new Uint8Array(dIv));
+                const decrypted = await this.decrypt(dBuf, dIv);
                 this.emit('data', JSON.parse(decrypted), this);
-            } catch (e) {
+            } catch {
                 console.error('Decryption error');
             }
         } else {
