@@ -5,23 +5,38 @@ export type Colours = 'purple' | 'green' | 'blue' | 'red' | 'orange';
 interface Props {
     colour: Colours;
     value: number;
+    hideLabel?: boolean;
+    orientation?: 'horizontal' | 'vertical';
+    thickness?: number;
+    style?: React.CSSProperties;
 }
 
-export default function PercentageBar({ colour, value }: Props) {
+export default function PercentageBar({ colour, value, hideLabel, orientation, thickness, style: cssStyle }: Props) {
     const pc = Math.round(value);
 
     return (
-        <div className={`${style.outer} ${style[colour]}`}>
+        <div
+            className={`${style.outer} ${style[colour]} ${style[orientation || 'horizontal']}`}
+            style={
+                thickness
+                    ? orientation === 'vertical'
+                        ? { width: `${thickness}px`, ...cssStyle }
+                        : { height: `${thickness}px`, ...cssStyle }
+                    : cssStyle
+            }
+        >
             <div
                 className={`${style.progress} ${style[colour]}`}
-                style={{ width: `${pc}%` }}
+                style={orientation === 'vertical' ? { height: `${pc}%` } : { width: `${pc}%` }}
             ></div>
-            <div
-                className={style.label}
-                style={{ width: `${pc}%` }}
-            >
-                {pc}%
-            </div>
+            {!hideLabel && (
+                <div
+                    className={style.label}
+                    style={orientation === 'vertical' ? { height: `${pc}%` } : { width: `${pc}%` }}
+                >
+                    {`${pc}%`}
+                </div>
+            )}
         </div>
     );
 }
