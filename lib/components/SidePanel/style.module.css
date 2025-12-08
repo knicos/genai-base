@@ -11,14 +11,19 @@
     opacity: 0;
 }
 
+.sidePanelHorizontal {
+    flex-direction: column;
+    width: 100%;
+}
+
 .sidePanel.closed {
     opacity: 0;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out;
 }
 
 .sidePanel.opening {
     opacity: 1;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in;
 }
 
 .sidePanel.open {
@@ -26,18 +31,31 @@
 }
 
 .resizer {
-    width: 30px;
-    cursor: ew-resize;
     background-color: transparent;
     box-sizing: border-box;
     position: absolute;
-    left: -8px;
+
     opacity: 1;
     touch-action: none;
     user-select: none;
+    z-index: 2;
+}
+
+.resizerHorizontal {
+    height: 30px;
+    width: 100%;
+    cursor: ns-resize;
+    left: 0;
+    top: -8px;
+    right: 0;
+}
+
+.resizerVertical {
+    width: 30px;
+    cursor: ew-resize;
+    left: -8px;
     top: 0;
     bottom: 0;
-    z-index: 2;
 }
 
 .noSelect {
@@ -53,6 +71,13 @@
     background-color: #ddd;
     touch-action: none;
     user-select: none;
+}
+
+.resizerHorizontal .resizerBar {
+    top: 7px;
+    left: 0;
+    width: 100%;
+    height: 2px;
 }
 
 .resizer:hover .resizerBar {
@@ -81,9 +106,25 @@
     user-select: none;
 }
 
+.resizerHorizontal .resizerHandle {
+    top: 2px;
+    left: 50%;
+    width: 60px;
+    height: 10px;
+    transform: translateX(-50%);
+}
+
 .resizerHandle.minimised {
     left: -15px;
     width: 20px;
+}
+
+.resizerHorizontal .resizerHandle.minimised {
+    top: -15px;
+    height: 20px;
+    left: 50%;
+    width: 60px;
+    transform: translateX(-50%);
 }
 
 .resizerHandle:focus {
@@ -91,7 +132,7 @@
     outline-offset: 2px;
 }
 
-.resizerHandle::before {
+.resizerVertical .resizerHandle::before {
     content: '';
     display: block;
     width: 4px;
@@ -99,6 +140,18 @@
     background: radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 2px,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 8px,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 14px;
+    background-repeat: no-repeat;
+    background-size: 4px 4px;
+}
+
+.resizerHorizontal .resizerHandle::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 4px;
+    background: radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 2px 0,
+        radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 8px 0,
+        radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 14px 0;
     background-repeat: no-repeat;
     background-size: 4px 4px;
 }

@@ -3,8 +3,9 @@ import style from './style.module.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { IconButton } from '@mui/material';
 
-const MIN_WIDTH = 30;
-const DEFAULT_WIDTH = Math.max(300, Math.floor(window.innerWidth * 0.25));
+const MIN_SIZE = 30;
+const MIN_EXPANDED_SIZE = 300;
+const DEFAULT_SIZE = Math.max(MIN_EXPANDED_SIZE, Math.floor(window.innerWidth * 0.25));
 
 const WIDTH_STORAGE_KEY = 'sidePanelWidth';
 
@@ -12,26 +13,29 @@ interface Props extends PropsWithChildren {
     open?: boolean;
     onClose?: () => void;
     onOpen?: () => void;
-    position?: 'left' | 'right';
+    position?: 'right' | 'bottom';
 }
 
 export default function SidePanel({ children, open, onClose, onOpen, position = 'right' }: Props) {
-    const [width, setWidth] = useState(open ? DEFAULT_WIDTH : 0);
+    const [size, setSize] = useState(open ? DEFAULT_SIZE : 0);
     const barRef = useRef<HTMLDivElement>(null);
     const [isResizing, setIsResizing] = useState(false);
     const [isOpening, setIsOpening] = useState(false);
     const [isClosed, setIsClosed] = useState(!open);
-    const lastWidthRef = useRef<number>(
+    const lastSizeRef = useRef<number>(
         window.sessionStorage.getItem(WIDTH_STORAGE_KEY)
             ? Number(window.sessionStorage.getItem(WIDTH_STORAGE_KEY))
-            : DEFAULT_WIDTH
+            : DEFAULT_SIZE
     );
 
-    const MAX_WIDTH = Math.floor(window.innerWidth / 2);
+    const MAX_SIZE = Math.max(
+        MIN_EXPANDED_SIZE,
+        Math.floor(position === 'right' ? window.innerWidth / 2 : window.innerHeight / 2)
+    );
 
     useEffect(() => {
         if (!open) {
-            setWidth(0);
+            setSize(0);
             const timer = setTimeout(() => {
                 setIsClosed(true);
             }, 300); // Match the CSS transition duration
@@ -47,7 +51,7 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
     // Needed to prevent width animation on resize
     useEffect(() => {
         if (isOpening) {
-            setWidth(lastWidthRef.current || DEFAULT_WIDTH);
+            setSize(lastSizeRef.current || DEFAULT_SIZE);
             const timer = setTimeout(() => {
                 setIsOpening(false);
             }, 300); // Match the CSS transition duration
@@ -61,15 +65,15 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
             function handleMouseMove(e: PointerEvent) {
                 if (isResizing && barRef.current) {
                     const panelRect = barRef.current.getBoundingClientRect();
-                    const newWidth = position === 'right' ? panelRect.right - e.clientX : e.clientX - panelRect.left;
-                    const clampedWidth = Math.max(Math.min(newWidth, MAX_WIDTH), MIN_WIDTH);
+                    const newSize = position === 'right' ? panelRect.right - e.clientX : panelRect.bottom - e.clientY;
+                    const clampedSize = Math.max(Math.min(newSize, MAX_SIZE), MIN_SIZE);
 
-                    if (clampedWidth - newWidth > 10) {
-                        setWidth(0);
+                    if (clampedSize - newSize > 10) {
+                        setSize(0);
                     } else {
-                        lastWidthRef.current = clampedWidth;
-                        setWidth(clampedWidth);
-                        window.sessionStorage.setItem(WIDTH_STORAGE_KEY, clampedWidth.toString());
+                        lastSizeRef.current = clampedSize;
+                        setSize(clampedSize);
+                        window.sessionStorage.setItem(WIDTH_STORAGE_KEY, clampedSize.toString());
                     }
                     e.preventDefault();
                 }
@@ -90,13 +94,15 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
                 document.body.classList.remove(style.noSelect);
             };
         }
-    }, [isResizing, position, MAX_WIDTH]);
+    }, [isResizing, position, MAX_SIZE]);
 
-    const isMinimised = width === 0;
+    const isMinimised = size === 0;
 
     const resizer = (
         <div
-            className={`${style.resizer} ${isResizing ? style.resizing : ''}`}
+            className={`${style.resizer} ${isResizing ? style.resizing : ''} ${
+                position === 'right' ? style.resizerVertical : style.resizerHorizontal
+            }`}
             onPointerDown={() => {
                 setIsResizing(true);
                 if (onOpen) {
@@ -109,17 +115,25 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
                 <div
                     className={`${style.resizerHandle} ${isMinimised ? style.minimised : ''}`}
                     role="separator"
-                    aria-orientation="vertical"
+                    aria-orientation={position === 'right' ? 'vertical' : 'horizontal'}
                     aria-label="Resize sidebar"
                     tabIndex={0}
-                    aria-valuenow={width}
-                    aria-valuemin={MIN_WIDTH}
-                    aria-valuemax={MAX_WIDTH}
+                    aria-valuenow={size}
+                    aria-valuemin={MIN_SIZE}
+                    aria-valuemax={MAX_SIZE}
                     onKeyDown={(e: KeyboardEvent) => {
-                        if (e.key === 'ArrowRight') {
-                            setWidth((w) => Math.min(MAX_WIDTH, Math.max(0, w - 50)));
-                        } else if (e.key === 'ArrowLeft') {
-                            setWidth((w) => Math.max(MIN_WIDTH, Math.min(MAX_WIDTH, w + 50)));
+                        if (position === 'right') {
+                            if (e.key === 'ArrowRight') {
+                                setSize((w) => Math.min(MAX_SIZE, Math.max(0, w - 50)));
+                            } else if (e.key === 'ArrowLeft') {
+                                setSize((w) => Math.max(MIN_SIZE, Math.min(MAX_SIZE, w + 50)));
+                            }
+                        } else {
+                            if (e.key === 'ArrowDown') {
+                                setSize((h) => Math.min(MAX_SIZE, Math.max(0, h - 50)));
+                            } else if (e.key === 'ArrowUp') {
+                                setSize((h) => Math.max(MIN_SIZE, Math.min(MAX_SIZE, h + 50)));
+                            }
                         }
                     }}
                 />
@@ -129,12 +143,18 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
 
     return (
         <section
-            className={`${style.sidePanel} ${open ? style.open : style.closed} ${isOpening ? style.opening : ''}`}
-            style={{ width: isMinimised ? 0 : width, visibility: isClosed ? 'hidden' : undefined }}
+            className={`${style.sidePanel} ${open ? style.open : style.closed} ${isOpening ? style.opening : ''} ${
+                position === 'right' ? style.sidePanelVertical : style.sidePanelHorizontal
+            }`}
+            style={
+                position === 'right'
+                    ? { width: isMinimised ? 0 : size, visibility: isClosed ? 'hidden' : undefined }
+                    : { height: isMinimised ? 0 : size, visibility: isClosed ? 'hidden' : undefined }
+            }
             ref={barRef}
             aria-hidden={!open}
         >
-            {position === 'right' && resizer}
+            {(position === 'right' || position === 'bottom') && resizer}
             <div className={style.content}>
                 {onClose && (
                     <div className={style.closeButton}>
@@ -151,7 +171,6 @@ export default function SidePanel({ children, open, onClose, onOpen, position = 
                 )}
                 {children}
             </div>
-            {position === 'left' && resizer}
         </section>
     );
 }

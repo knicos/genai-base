@@ -24,6 +24,28 @@ export const BasicSidePanel: Story = () => (
     </section>
 );
 
+export const TopSidePanel: Story = () => (
+    <section
+        style={{
+            height: '100%',
+            minHeight: '400px',
+            position: 'relative',
+            width: '100%',
+            display: 'flex',
+            overflow: 'hidden',
+            flexDirection: 'column',
+        }}
+    >
+        <div style={{ flexGrow: 1, backgroundColor: 'lightgray' }}>Other Content</div>
+        <SidePanel
+            open={true}
+            position="bottom"
+        >
+            Content inside the side panel
+        </SidePanel>
+    </section>
+);
+
 export const OpenCloseSidePanel: Story = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
