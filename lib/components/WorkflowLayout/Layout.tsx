@@ -6,9 +6,11 @@ import { LinesUpdateContext } from './svgContext';
 
 interface Props extends PropsWithChildren {
     connections: IConnection[];
+    columns?: number;
+    ignoredColumns?: number;
 }
 
-export default function WorkflowLayout({ children, connections }: Props) {
+export default function WorkflowLayout({ children, connections, columns, ignoredColumns }: Props) {
     const [lines, setLines] = useState<ILine[]>([]);
     const wkspaceRef = useRef<HTMLDivElement>(null);
     const observer = useRef<ResizeObserver>();
@@ -53,7 +55,11 @@ export default function WorkflowLayout({ children, connections }: Props) {
                     ref={wkspaceRef}
                     style={{
                         gridTemplateColumns: `repeat(${
-                            Array.isArray(children) ? children.filter((c) => !!c).length : 1
+                            columns !== undefined
+                                ? columns
+                                : Array.isArray(children)
+                                ? children.filter((c) => !!c).length - (ignoredColumns || 0)
+                                : 1
                         }, max-content)`,
                     }}
                 >
