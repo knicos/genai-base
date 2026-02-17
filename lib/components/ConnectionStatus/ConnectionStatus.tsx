@@ -85,7 +85,16 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
                         setWebRTC('full');
                     })
                     .catch(() => {
-                        setWebRTC('relay');
+                        navigator.mediaDevices
+                            .getUserMedia({ audio: true })
+                            .then((stream) => {
+                                streamRef.current = stream;
+                                setWebRTC('full');
+                            })
+                            .catch(() => {
+                                setWebRTC('relay');
+                            });
+                        // setWebRTC('relay');
                     });
                 // Happens if in non-secure context
             } else {
@@ -119,10 +128,10 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
                         status === 'connecting' && !failed
                             ? style.containerConnecting
                             : quality === 3
-                            ? style.containerSuccess
-                            : quality === 2
-                            ? style.containerMedium
-                            : style.containerBad
+                              ? style.containerSuccess
+                              : quality === 2
+                                ? style.containerMedium
+                                : style.containerBad
                     }
                 >
                     {!failed && quality > 0 && (
@@ -142,8 +151,8 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
                         {ready
                             ? t(`loader.messages.quality${quality}`)
                             : failed
-                            ? t('loader.messages.failed')
-                            : t(`loader.messages.${status}`)}
+                              ? t('loader.messages.failed')
+                              : t(`loader.messages.${status}`)}
                     </div>
                 </div>
             )}
