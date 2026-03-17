@@ -60,6 +60,7 @@ export default function Feedback({ application, apiUrl, delay, className, style,
             )}
             <FeedbackForm
                 open={open}
+                apiUrl={apiUrl}
                 onClose={() => setOpen(false)}
                 onDone={() => {
                     localStorage.setItem('feedbackSubmitted', 'true');

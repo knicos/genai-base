@@ -13,6 +13,7 @@ interface Props {
     token: string;
     application: string;
     open?: boolean;
+    apiUrl: string;
     onClose?: () => void;
     onDone?: () => void;
 }
@@ -24,7 +25,7 @@ function validate(rating: number, recommend: number, experience: string) {
     return true;
 }
 
-export default function FeedbackForm({ application, open, onClose, token, onDone }: Props) {
+export default function FeedbackForm({ application, open, onClose, token, onDone, apiUrl }: Props) {
     const { t } = useTranslation();
     const [rating, setRating] = useState(0);
     const [recommend, setRecommend] = useState(0);
@@ -45,9 +46,8 @@ export default function FeedbackForm({ application, open, onClose, token, onDone
     const validated = validate(rating, recommend, experience);
 
     const doSubmit = () => {
-        const apiAddress = import.meta.env.VITE_FEEDBACK_URL;
-        if (apiAddress) {
-            fetch(`${apiAddress}`, {
+        if (apiUrl) {
+            fetch(`${apiUrl}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
