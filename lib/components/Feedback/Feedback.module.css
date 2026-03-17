@@ -1,0 +1,168 @@
+.star {
+    font-size: 3rem;
+    color: #fac22a;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60px;
+}
+
+.star:hover {
+    color: #ffdb4d;
+}
+
+.label {
+    font-size: 0.7rem;
+    color: #444;
+    text-align: center;
+}
+
+.rating {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.ratingContainer h2 {
+    font-size: 1rem;
+    margin-top: 2rem;
+    color: #444;
+    font-weight: normal;
+}
+
+.box {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    color: #444;
+    cursor: pointer;
+    border-radius: 8px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    box-sizing: border-box;
+    background-color: #f0f0f0;
+    outline: 2px dashed transparent;
+
+    --background-select-color: black;
+}
+
+.box1 {
+    background-color: #ff4d4d44;
+    border-color: #eea2a2;
+    --background-select-color: #eea2a2;
+}
+
+.box1:hover {
+    font-weight: bold;
+    background-color: #eea2a2;
+}
+
+.box2 {
+    background-color: #ff944d44;
+    border-color: #e49c5d;
+    --background-select-color: #e49c5d;
+}
+
+.box2:hover {
+    font-weight: bold;
+    background-color: #e49c5d;
+}
+
+.box3 {
+    background-color: #ffdb4d44;
+    border-color: #f7d87b;
+    --background-select-color: #f7d87b;
+}
+
+.box3:hover {
+    font-weight: bold;
+    background-color: #f7d87b;
+}
+
+.box4 {
+    background-color: #e3edd8;
+    border-color: #b2da7e;
+    --background-select-color: #b2da7e;
+}
+
+.box4:hover {
+    font-weight: bold;
+    background-color: #b2da7e;
+}
+
+.box5 {
+    background-color: #66cc6644;
+    border-color: #9ce4a2;
+    --background-select-color: #9ce4a2;
+}
+
+.box5:hover {
+    font-weight: bold;
+    background-color: #9ce4a2;
+}
+
+.box.filled {
+    outline-color: #444;
+    border-color: transparent;
+    font-weight: bold;
+}
+
+.box.filled:hover {
+    background-color: var(--background-select-color);
+}
+
+.boxContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    max-width: 50px;
+}
+
+.experienceContainer h2 {
+    font-size: 1rem;
+    margin-top: 2rem;
+    color: #444;
+    font-weight: normal;
+}
+
+.feedback h1 {
+    margin-bottom: 0;
+}
+
+.feedback {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    user-select: none;
+    padding: 1rem 2.5rem;
+    max-width: 320px;
+    overflow: hidden;
+}
+
+.messageBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    padding: 2rem;
+    justify-content: center;
+}
+
+.thankYouBox {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+}
+
+.messageBox p {
+    color: #444;
+    text-align: center;
+}

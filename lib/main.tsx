@@ -50,3 +50,4 @@ export { IconMenu, IconMenuInline, IconMenuItem, Spacer } from './components/Ico
 export { default as PercentageBar } from './components/PercentageBar/PercentageBar';
 export { default as PieScore } from './components/PieScore/PieScore';
 export { default as Application } from './components/Application/Application';
+export { default as Feedback } from './components/Feedback/Feedback';
