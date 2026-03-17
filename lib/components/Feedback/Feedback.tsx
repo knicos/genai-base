@@ -6,13 +6,14 @@ import ThumbsUpDownIcon from '@mui/icons-material/ThumbsUpDown';
 
 interface Props {
     application: string;
+    apiUrl: string;
     delay?: number; // in milliseconds
     className?: string;
     style?: CSSProperties;
     variant?: 'contained' | 'outlined' | 'text';
 }
 
-export default function Feedback({ application, delay, className, style, variant }: Props) {
+export default function Feedback({ application, apiUrl, delay, className, style, variant }: Props) {
     const { t } = useTranslation();
     const [showButton, setShowButton] = useState(false);
     const [token, setToken] = useState('');
@@ -25,10 +26,8 @@ export default function Feedback({ application, delay, className, style, variant
         if (!hasSubmitted) {
             const timer = setTimeout(
                 () => {
-                    const apiAddress = import.meta.env.VITE_FEEDBACK_URL;
-
-                    if (apiAddress) {
-                        fetch(`${apiAddress}`)
+                    if (apiUrl) {
+                        fetch(`${apiUrl}`)
                             .then((res) => res.json())
                             .then((data) => {
                                 setToken(data.token);
@@ -44,7 +43,7 @@ export default function Feedback({ application, delay, className, style, variant
 
             return () => clearTimeout(timer);
         }
-    }, [hasSubmitted, delay]);
+    }, [hasSubmitted, delay, apiUrl]);
 
     return (
         <>

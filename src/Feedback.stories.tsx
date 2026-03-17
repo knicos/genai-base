@@ -12,6 +12,7 @@ export const FeedbackStory: Story = () => (
         <Feedback
             delay={0}
             application="tm"
+            apiUrl={import.meta.env.VITE_FEEDBACK_URL || ''}
         />
     </section>
 );
