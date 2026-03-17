@@ -51,3 +51,5 @@ export { default as PercentageBar } from './components/PercentageBar/PercentageB
 export { default as PieScore } from './components/PieScore/PieScore';
 export { default as Application } from './components/Application/Application';
 export { default as Feedback } from './components/Feedback/Feedback';
+export { default as Help } from './components/Help/Help';
+export { default as InfoPop } from './components/InfoPop/InfoPop';
