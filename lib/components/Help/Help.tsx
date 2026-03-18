@@ -2,7 +2,9 @@ import { IconButton } from '@mui/material';
 import InfoPop from '../InfoPop/InfoPop';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { CSSProperties, MouseEvent, PropsWithChildren, useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
 import style from './style.module.css';
+import { Button } from '@base/main';
 
 interface Props extends PropsWithChildren {
     message: string;
@@ -10,8 +12,11 @@ interface Props extends PropsWithChildren {
     active?: boolean;
     style?: CSSProperties;
     placement?: 'top' | 'bottom' | 'left' | 'right';
+    buttonPlacement?: 'top' | 'bottom' | 'left' | 'right';
     inplace?: boolean;
     inside?: boolean;
+    keepOpen?: boolean;
+    closeLabel?: string;
 }
 
 export default function Help({
@@ -23,11 +28,16 @@ export default function Help({
     placement,
     inplace,
     inside,
+    keepOpen,
+    closeLabel,
+    buttonPlacement = 'left',
 }: Props) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
-        setAnchorEl(inplace || inside ? event.currentTarget : event.currentTarget.parentElement);
+        setAnchorEl((prev) =>
+            prev ? null : inplace || inside ? event.currentTarget : event.currentTarget.parentElement
+        );
     };
 
     const handleClose = () => {
@@ -44,8 +54,8 @@ export default function Help({
             {!inplace && (
                 <IconButton
                     onClick={handleClick}
-                    onMouseLeave={handleClose}
-                    className={`${style.helpButton} ${inside ? style.helpButtonInside : ''}`}
+                    onMouseLeave={!keepOpen ? handleClose : undefined}
+                    className={`${style.helpButton} ${inside ? style.helpButtonInside : ''} ${style[buttonPlacement]}`}
                     color="inherit"
                 >
                     <HelpOutlineIcon fontSize="medium" />
@@ -55,7 +65,7 @@ export default function Help({
             {inplace && (
                 <IconButton
                     onClick={handleClick}
-                    onMouseLeave={handleClose}
+                    onMouseLeave={!keepOpen ? handleClose : undefined}
                     className={style.helpButtonInplace}
                     color="inherit"
                 >
@@ -68,6 +78,17 @@ export default function Help({
                 placement={placement}
             >
                 {message}
+                {keepOpen && (
+                    <Button
+                        onClick={handleClose}
+                        className={style.closeButton}
+                        color="inherit"
+                        startIcon={<CloseIcon fontSize="small" />}
+                        variant="outlined"
+                    >
+                        {closeLabel || 'Close'}
+                    </Button>
+                )}
             </InfoPop>
         </div>
     );

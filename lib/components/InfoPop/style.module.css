@@ -1,53 +1,62 @@
 .popper {
+    position: relative;
     display: flex;
     flex-direction: column;
     padding: 1rem 1.5rem;
     border-radius: 6px;
-    box-shadow: 2px 2px 4px #a4acbb;
     font-family: Andika, sans-serif;
     animation: fadeIn 0.3s ease-out;
     max-width: 250px;
+    --infopop-bg: #0a4bd6;
 }
 
 .dark {
-    background: #0a4bd6;
+    --infopop-bg: #0a4bd6;
+    background: var(--infopop-bg);
     color: white;
 }
 
 .light {
-    background: white;
+    --infopop-bg: white;
+    background: var(--infopop-bg);
     color: #444;
 }
 
-.popper.bottom {
-    margin-top: 10px;
-    margin-bottom: 10px;
+.arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+    background: none;
+    transform: rotate(45deg);
 }
 
-.popper.top {
-    margin-top: 10px;
-    margin-bottom: 10px;
+/* Arrow position follows actual computed Popper placement */
+.root[data-popper-placement^='bottom'] .arrow {
+    top: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #0a4bd6;
+}
+.root[data-popper-placement^='top'] .arrow {
+    bottom: -10px;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #0a4bd6;
+}
+.root[data-popper-placement^='right'] .arrow {
+    left: -10px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #0a4bd6;
+}
+.root[data-popper-placement^='left'] .arrow {
+    right: -10px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #0a4bd6;
 }
 
-.popper.right {
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.popper.left {
-    margin-right: 5px;
-    margin-left: 5px;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
+/* Remove old pseudo-element arrows */
 .popper.right::before {
     content: '';
     position: absolute;
@@ -104,4 +113,29 @@
 .popper p {
     margin: 0;
     font-size: 0.9rem;
+}
+
+.root[data-popper-placement^='bottom'] .popper {
+    margin-top: 10px;
+}
+
+.root[data-popper-placement^='top'] .popper {
+    margin-bottom: 10px;
+}
+
+.root[data-popper-placement^='right'] .popper {
+    margin-left: 5px;
+}
+
+.root[data-popper-placement^='left'] .popper {
+    margin-right: 5px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
