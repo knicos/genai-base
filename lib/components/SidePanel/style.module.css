@@ -199,7 +199,6 @@
 .content {
     flex-grow: 1;
     overflow: auto;
-    min-width: 300px !important;
     /*position: relative;*/
 }
 

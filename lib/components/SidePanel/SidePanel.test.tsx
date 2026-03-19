@@ -13,7 +13,7 @@ describe('SidePanel', () => {
                 Side Panel Content
             </SidePanel>
         );
-        expect(screen.queryByText('Side Panel Content')).not.toBeVisible();
+        expect(screen.queryByText('Side Panel Content')).toBe(null);
     });
 
     it('renders open', async ({ expect }) => {

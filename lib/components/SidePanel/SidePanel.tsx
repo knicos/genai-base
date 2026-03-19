@@ -107,7 +107,7 @@ export default function SidePanel({ children, open, onClose, onOpen, closeLabel,
         }
     }, [isResizing, position, MAX_SIZE]);
 
-    const isMinimised = size === 0;
+    const isMinimised = size === 0 || isClosed;
 
     const resizer = (
         <div
@@ -208,7 +208,7 @@ export default function SidePanel({ children, open, onClose, onOpen, closeLabel,
                         </IconButton>
                     </div>
                 )}
-                {children}
+                {isMinimised || size < MIN_EXPANDED_SIZE ? null : children}
             </div>
         </aside>
     );
