@@ -11,9 +11,11 @@ export const LANGS = [
 
 interface Props {
     languages?: { name: string; label: string }[];
+    ns?: string;
+    dark?: boolean;
 }
 
-export default function LangSelect({ languages = LANGS }: Props) {
+export default function LangSelect({ languages = LANGS, ns = 'common', dark = false }: Props) {
     const { t, i18n } = useTranslation();
     const doChangeLanguage = useCallback(
         (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -23,13 +25,14 @@ export default function LangSelect({ languages = LANGS }: Props) {
     );
 
     return (
-        <div className={style.lang}>
+        <div className={`${style.lang} ${dark ? style.dark : ''}`}>
             <NativeSelect
                 value={i18n.language}
                 onChange={doChangeLanguage}
                 variant="outlined"
                 data-testid="select-lang"
-                inputProps={{ 'aria-label': t('app.language', { ns: 'common' }) }}
+                inputProps={{ 'aria-label': t('app.language', { ns }) }}
+                className={`${style.select} ${dark ? style.darkSelect : ''}`}
             >
                 {languages.map((lng) => (
                     <option

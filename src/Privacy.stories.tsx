@@ -11,6 +11,7 @@ export const PrivacyButton: Story = () => (
     <Privacy
         appName="test"
         tag="v1"
-        position="topRight"
+        position="bottomLeft"
+        style={{ marginBottom: '4rem' }}
     />
 );

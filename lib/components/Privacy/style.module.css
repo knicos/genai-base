@@ -1,6 +1,6 @@
 .policy {
-    color: #444;
-    background: white;
+    color: white;
+    background: #444;
     position: fixed;
     align-items: center;
     gap: 1rem;
@@ -8,7 +8,7 @@
     display: flex;
     font-size: 0.7rem;
     box-sizing: border-box;
-    box-shadow: 0 0 6px #ddd;
+    box-shadow: 2px 2px 4px #a4acbb;
     overflow: hidden;
 }
 
@@ -27,11 +27,11 @@
 }
 
 .policy a {
-    color: #444;
+    color: white;
 }
 
 .policy a:visited {
-    color: #444;
+    color: white;
 }
 
 .versionBox {
@@ -44,12 +44,4 @@
     padding-right: 8px;
     background: #444;
     box-sizing: border-box;
-}
-
-.bottomLeft .versionBox {
-    border-top-right-radius: 20px;
-}
-
-.topRight .versionBox {
-    border-bottom-left-radius: 20px;
 }

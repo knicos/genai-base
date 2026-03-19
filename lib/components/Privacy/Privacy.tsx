@@ -1,18 +1,23 @@
 import style from './style.module.css';
 import { useTranslation } from 'react-i18next';
 import logo from './github-mark-white.svg';
+import { CSSProperties } from 'react';
 
 interface Props {
     position?: 'bottomLeft' | 'topRight';
     tag: string;
     appName: string;
+    style?: CSSProperties;
 }
 
-export default function Privacy({ tag, appName, position = 'bottomLeft' }: Props) {
+export default function Privacy({ tag, appName, position = 'bottomLeft', style: customStyle }: Props) {
     const { t } = useTranslation();
 
     return (
-        <section className={`${style.policy} ${style[position]}`}>
+        <section
+            className={`${style.policy} ${style[position]}`}
+            style={customStyle}
+        >
             {position === 'topRight' && (
                 <a
                     href="/about"

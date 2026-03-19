@@ -1,8 +1,30 @@
-@value textDark from "../../../public/colours.module.css";
-
 .lang {
     display: flex;
     align-items: center;
     gap: 0.3rem;
-    color: #aaa;
+    color: #666;
+}
+
+.dark {
+    color: white;
+}
+
+.dark div {
+    color: white;
+}
+
+.dark svg {
+    color: white;
+}
+
+.dark option {
+    color: black;
+}
+
+.darkSelect::before {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.42);
+}
+
+.darkSelect:hover::before {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.42) !important;
 }
