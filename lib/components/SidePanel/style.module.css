@@ -18,12 +18,26 @@
 
 .sidePanel.closed {
     opacity: 0;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-out;
+    transition:
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease-out;
 }
 
 .sidePanel.opening {
     opacity: 1;
-    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease-in;
+    transition:
+        width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        height 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 0.3s ease-in;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidePanel,
+    .sidePanel.closed,
+    .sidePanel.opening {
+        transition: none;
+    }
 }
 
 .sidePanel.open {
@@ -68,7 +82,7 @@
     left: 7px;
     width: 2px;
     height: 100%;
-    background-color: #ddd;
+    background-color: #bbb;
     touch-action: none;
     user-select: none;
 }
@@ -97,7 +111,7 @@
     transform: translateY(-50%);
     background-color: white;
     border-radius: 3px;
-    border: 2px solid #ddd;
+    border: 2px solid #bbb;
     box-shadow: 0 0 4px #ccc;
     display: flex;
     align-items: center;
@@ -137,7 +151,8 @@
     display: block;
     width: 4px;
     height: 20px;
-    background: radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 2px,
+    background:
+        radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 2px,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 8px,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 0 14px;
     background-repeat: no-repeat;
@@ -149,7 +164,8 @@
     display: block;
     width: 20px;
     height: 4px;
-    background: radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 2px 0,
+    background:
+        radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 2px 0,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 8px 0,
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 14px 0;
     background-repeat: no-repeat;
@@ -172,7 +188,7 @@
     width: 30px;
     background-color: white;
     border-radius: 3px;
-    border: 2px solid #ddd;
+    border: 2px solid #aaa;
     cursor: pointer;
     /* box-shadow: 0 0 3px #bbb; */
     display: flex;
@@ -184,11 +200,13 @@
     flex-grow: 1;
     overflow: auto;
     min-width: 300px !important;
-    position: relative;
+    /*position: relative;*/
 }
 
 .closeButton {
-    position: absolute;
+    position: sticky;
     top: 0.5rem;
-    right: 0.5rem;
+    margin-left: auto;
+    width: min-content;
+    z-index: 100;
 }

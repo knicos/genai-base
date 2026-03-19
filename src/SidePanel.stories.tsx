@@ -19,7 +19,7 @@ export const BasicSidePanel: Story = () => (
             overflow: 'hidden',
         }}
     >
-        <div style={{ flexGrow: 1, backgroundColor: 'lightgray' }}>Other Content</div>
+        <div style={{ flexGrow: 1, backgroundColor: '#dee4e8' }}>Other Content</div>
         <SidePanel open={true}>Content inside the side panel</SidePanel>
     </section>
 );
@@ -36,7 +36,7 @@ export const TopSidePanel: Story = () => (
             flexDirection: 'column',
         }}
     >
-        <div style={{ flexGrow: 1, backgroundColor: 'lightgray' }}>Other Content</div>
+        <div style={{ flexGrow: 1, backgroundColor: '#dee4e8' }}>Other Content</div>
         <SidePanel
             open={true}
             position="bottom"
@@ -59,10 +59,15 @@ export const OpenCloseSidePanel: Story = () => {
                 overflow: 'hidden',
             }}
         >
-            <div style={{ flexGrow: 1, backgroundColor: 'lightgray' }}>
+            <div style={{ flexGrow: 1, backgroundColor: '#dee4e8' }}>
                 <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Open'} Side Panel</Button>
             </div>
-            <SidePanel open={isOpen}>Content inside the side panel</SidePanel>
+            <SidePanel
+                open={isOpen}
+                onClose={() => setIsOpen(false)}
+            >
+                Content inside the side panel
+            </SidePanel>
         </section>
     );
 };
