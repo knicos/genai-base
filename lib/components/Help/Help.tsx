@@ -1,13 +1,13 @@
 import { IconButton } from '@mui/material';
 import InfoPop from '../InfoPop/InfoPop';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-import { CSSProperties, MouseEvent, PropsWithChildren, useState } from 'react';
+import { CSSProperties, MouseEvent, PropsWithChildren, ReactNode, useState } from 'react';
 import CloseIcon from '@mui/icons-material/Close';
 import style from './style.module.css';
 import { Button } from '@base/main';
 
 interface Props extends PropsWithChildren {
-    message: string;
+    message: ReactNode;
     widget?: string;
     active?: boolean;
     style?: CSSProperties;
