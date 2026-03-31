@@ -86,6 +86,19 @@ export const HelpBoxKeepOpenStory: Story = () => (
     </section>
 );
 
+export const HelpDark: Story = () => (
+    <section style={{ background: '#444', padding: '2rem', color: 'white' }}>
+        <Help
+            keepOpen
+            dark
+            inplace
+            message="Some help about hello"
+        >
+            Hello world
+        </Help>
+    </section>
+);
+
 export const HelpBoxBottomStory: Story = () => (
     <section>
         <Help

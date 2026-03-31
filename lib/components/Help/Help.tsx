@@ -17,6 +17,7 @@ interface Props extends PropsWithChildren {
     inside?: boolean;
     keepOpen?: boolean;
     closeLabel?: string;
+    dark?: boolean;
 }
 
 export default function Help({
@@ -30,6 +31,7 @@ export default function Help({
     inside,
     keepOpen,
     closeLabel,
+    dark,
     buttonPlacement = 'left',
 }: Props) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -55,7 +57,7 @@ export default function Help({
                 <IconButton
                     onClick={handleClick}
                     onMouseLeave={!keepOpen ? handleClose : undefined}
-                    className={`${style.helpButton} ${inside ? style.helpButtonInside : ''} ${style[buttonPlacement]}`}
+                    className={`${style.helpButton} ${inside ? style.helpButtonInside : ''} ${style[buttonPlacement]} ${dark ? style.dark : ''}`}
                     color="inherit"
                 >
                     <HelpOutlineIcon fontSize="medium" />
@@ -66,7 +68,7 @@ export default function Help({
                 <IconButton
                     onClick={handleClick}
                     onMouseLeave={!keepOpen ? handleClose : undefined}
-                    className={style.helpButtonInplace}
+                    className={`${style.helpButtonInplace} ${dark ? style.dark : ''}`}
                     color="inherit"
                 >
                     <HelpOutlineIcon fontSize="medium" />

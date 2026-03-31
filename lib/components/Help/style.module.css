@@ -7,6 +7,11 @@
     opacity: 0;
 }
 
+.helpButton.dark {
+    color: #a7c0f5;
+    background: rgba(0, 0, 0, 0.4);
+}
+
 .helpButton.left {
     left: -3rem;
     top: 0.5rem;
@@ -34,8 +39,17 @@
     opacity: 0.2;
 }
 
+.helpButtonInplace.dark {
+    opacity: 0.4;
+    color: #a7c0f5;
+}
+
 .helpButton:hover {
     background: white;
+}
+
+.helpButton.dark:hover {
+    background: black;
 }
 
 .container {
@@ -52,6 +66,10 @@
     background: white;
 }
 
+.helpButton.dark:focus {
+    background: black;
+}
+
 .inplaceContainer {
     display: flex;
     align-items: center;
@@ -64,6 +82,10 @@
 .helpButtonInplace:focus {
     opacity: 1;
     background: white;
+}
+
+.helpButtonInplace.dark:focus {
+    background: black;
 }
 
 .active {
