@@ -191,12 +191,12 @@ export default function SidePanel({
                 position === 'right'
                     ? {
                           width: isMinimised ? 0 : size,
-                          visibility: isClosed ? 'hidden' : undefined,
+                          display: isClosed ? 'none' : undefined,
                           flexBasis: isMinimised ? 0 : 'unset',
                       }
                     : {
                           height: isMinimised ? 0 : size,
-                          visibility: isClosed ? 'hidden' : undefined,
+                          display: isClosed ? 'none' : undefined,
                           flexBasis: isMinimised ? 0 : 'unset',
                       }
             }
