@@ -9,11 +9,21 @@
     transition: opacity 0.3s ease-in;
 
     opacity: 0;
+    width: 0;
+}
+
+.sidePanel.dark {
+    background: #444;
+    color: white;
 }
 
 .sidePanelHorizontal {
     flex-direction: column;
     width: 100%;
+}
+
+.sidePanelVertical {
+    flex-direction: row;
 }
 
 .sidePanel.closed {
@@ -80,18 +90,22 @@
     position: absolute;
     top: 0;
     left: 7px;
-    width: 2px;
+    width: 4px;
     height: 100%;
-    background-color: #bbb;
+    background-color: #fff;
     touch-action: none;
     user-select: none;
+}
+
+.resizerDark .resizerBar {
+    background-color: #444;
 }
 
 .resizerHorizontal .resizerBar {
     top: 7px;
     left: 0;
     width: 100%;
-    height: 2px;
+    height: 4px;
 }
 
 .resizer:hover .resizerBar {
@@ -118,6 +132,13 @@
     justify-content: center;
     touch-action: none;
     user-select: none;
+}
+
+.resizerDark .resizerHandle {
+    background-color: #444;
+    border-color: #333;
+    box-shadow: 0 0 4px #333;
+    color: white;
 }
 
 .resizerHorizontal .resizerHandle {
@@ -159,6 +180,13 @@
     background-size: 4px 4px;
 }
 
+.resizerDark.resizerVertical .resizerHandle::before {
+    background:
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 0 2px,
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 0 8px,
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 0 14px;
+}
+
 .resizerHorizontal .resizerHandle::before {
     content: '';
     display: block;
@@ -170,6 +198,13 @@
         radial-gradient(circle, #bbb 1.5px, transparent 1.5px) 14px 0;
     background-repeat: no-repeat;
     background-size: 4px 4px;
+}
+
+.resizerDark.resizerHorizontal .resizerHandle::before {
+    background:
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 2px 0,
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 8px 0,
+        radial-gradient(circle, #aaa 1.5px, transparent 1.5px) 14px 0;
 }
 
 .resizer:hover .resizerHandle {
@@ -200,12 +235,14 @@
     flex-grow: 1;
     overflow: auto;
     /*position: relative;*/
+    min-width: 300px;
+    scrollbar-width: thin;
 }
 
 .closeButton {
-    position: sticky;
+    position: absolute;
     top: 0.5rem;
-    margin-left: auto;
+    right: 0.5rem;
     width: min-content;
     z-index: 100;
 }

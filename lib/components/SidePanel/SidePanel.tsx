@@ -15,9 +15,18 @@ interface Props extends PropsWithChildren {
     onOpen?: () => void;
     position?: 'right' | 'bottom';
     closeLabel?: string;
+    dark?: boolean;
 }
 
-export default function SidePanel({ children, open, onClose, onOpen, closeLabel, position = 'right' }: Props) {
+export default function SidePanel({
+    children,
+    open,
+    onClose,
+    onOpen,
+    closeLabel,
+    position = 'right',
+    dark = false,
+}: Props) {
     const [size, setSize] = useState(open ? DEFAULT_SIZE : 0);
     const barRef = useRef<HTMLDivElement>(null);
     const [isResizing, setIsResizing] = useState(false);
@@ -113,7 +122,7 @@ export default function SidePanel({ children, open, onClose, onOpen, closeLabel,
         <div
             className={`${style.resizer} ${isResizing ? style.resizing : ''} ${
                 position === 'right' ? style.resizerVertical : style.resizerHorizontal
-            }`}
+            } ${dark ? style.resizerDark : ''}`}
             onPointerDown={() => {
                 setIsResizing(true);
                 if (onOpen) {
@@ -177,11 +186,19 @@ export default function SidePanel({ children, open, onClose, onOpen, closeLabel,
         <aside
             className={`${style.sidePanel} ${open ? style.open : style.closed} ${isOpening ? style.opening : ''} ${
                 position === 'right' ? style.sidePanelVertical : style.sidePanelHorizontal
-            }`}
+            } ${dark ? style.dark : ''}`}
             style={
                 position === 'right'
-                    ? { width: isMinimised ? 0 : size, visibility: isClosed ? 'hidden' : undefined }
-                    : { height: isMinimised ? 0 : size, visibility: isClosed ? 'hidden' : undefined }
+                    ? {
+                          width: isMinimised ? 0 : size,
+                          visibility: isClosed ? 'hidden' : undefined,
+                          flexBasis: isMinimised ? 0 : 'unset',
+                      }
+                    : {
+                          height: isMinimised ? 0 : size,
+                          visibility: isClosed ? 'hidden' : undefined,
+                          flexBasis: isMinimised ? 0 : 'unset',
+                      }
             }
             ref={barRef}
             aria-hidden={!open}
@@ -193,23 +210,22 @@ export default function SidePanel({ children, open, onClose, onOpen, closeLabel,
             }}
         >
             {(position === 'right' || position === 'bottom') && resizer}
-            <div className={style.content}>
-                {onClose && (
-                    <div className={style.closeButton}>
-                        <IconButton
-                            onClick={onClose}
-                            data-testid="sidepanel-close-button"
-                            aria-label={closeLabel ?? 'Close side panel'}
-                        >
-                            <CloseIcon
-                                fontSize="medium"
-                                htmlColor="#444"
-                            />
-                        </IconButton>
-                    </div>
-                )}
-                {isMinimised || size < MIN_EXPANDED_SIZE ? null : children}
-            </div>
+            <div className={style.content}>{isMinimised ? null : children}</div>
+            {onClose && size > 50 && (
+                <div className={style.closeButton}>
+                    <IconButton
+                        onClick={onClose}
+                        data-testid="sidepanel-close-button"
+                        aria-label={closeLabel ?? 'Close side panel'}
+                        color="inherit"
+                    >
+                        <CloseIcon
+                            fontSize="medium"
+                            color="inherit"
+                        />
+                    </IconButton>
+                </div>
+            )}
         </aside>
     );
 }

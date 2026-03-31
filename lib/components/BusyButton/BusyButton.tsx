@@ -1,8 +1,9 @@
-import React, { forwardRef } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
 import { Button } from '../Button/Button';
 import CircularProgress from '@mui/material/CircularProgress';
+import { ButtonProps } from '@mui/material';
 
-interface Props extends React.ComponentProps<typeof Button> {
+interface Props extends PropsWithChildren<ButtonProps> {
     busy?: boolean;
 }
 
