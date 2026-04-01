@@ -9,11 +9,12 @@ export default {
 
 export const WebcamStory: Story = () => <Webcam size={128} />;
 
-function postProcess(image: HTMLCanvasElement) {
-    const ctx = image.getContext('2d');
+function postProcess(input: HTMLCanvasElement, output: HTMLCanvasElement) {
+    const ctx = output.getContext('2d');
     if (!ctx) {
         return;
     }
+    ctx.drawImage(input, 0, 0);
     ctx.rect(10, 10, 100, 100);
     ctx.fillStyle = 'red';
     ctx.fill();

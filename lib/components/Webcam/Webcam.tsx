@@ -9,7 +9,7 @@ import { WebcamClass } from './webcamClass';
 interface Callbacks {
     onCapture?: (image: HTMLCanvasElement) => void | Promise<void>;
     onPreprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
-    onPostprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
+    onPostprocess?: (input: HTMLCanvasElement, output: HTMLCanvasElement) => void | Promise<void>;
     onActivated?: (available: boolean) => void;
     onFatal?: () => void;
 }
@@ -80,9 +80,11 @@ export default function Webcam({
 
                 const ctx = webcamRef.current?.getContext('2d');
                 if (ctx) {
-                    ctx.drawImage(webcam.canvas, 0, 0);
+                    //ctx.drawImage(webcam.canvas, 0, 0);
                     if (onPostprocess && webcamRef.current) {
-                        await onPostprocess(webcamRef.current);
+                        await onPostprocess(webcam.canvas, webcamRef.current);
+                    } else if (webcamRef.current) {
+                        ctx.drawImage(webcam.canvas, 0, 0);
                     }
                 }
             }
