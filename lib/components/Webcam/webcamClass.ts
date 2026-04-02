@@ -19,7 +19,7 @@ import { cropTo } from '@base/util/canvas';
 
 const defaultVideoOptions: MediaTrackConstraints = {
     facingMode: 'user',
-    frameRate: 24,
+    //frameRate: 24,
 };
 
 const fillConstraints = (options: Partial<MediaTrackConstraints>) => {
@@ -47,7 +47,8 @@ export class WebcamClass {
             return Promise.reject('Your browser does not support WebRTC. Please try another one.');
         }
 
-        options.width = 640;
+        options.width = this.width;
+        options.height = this.height;
         const videoOptions = fillConstraints(options);
 
         const video = document.createElement('video');
