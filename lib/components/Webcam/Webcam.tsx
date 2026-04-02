@@ -7,9 +7,9 @@ import CameraswitchIcon from '@mui/icons-material/Cameraswitch';
 import { WebcamClass } from './webcamClass';
 
 interface Callbacks {
-    onCapture?: (image: HTMLCanvasElement) => void | Promise<void>;
+    onCapture?: (image: HTMLCanvasElement, timestamp: number) => void | Promise<void>;
     onPreprocess?: (image: HTMLCanvasElement) => void | Promise<void>;
-    onPostprocess?: (input: HTMLCanvasElement, output: HTMLCanvasElement) => void | Promise<void>;
+    onPostprocess?: (input: HTMLCanvasElement, output: HTMLCanvasElement, timestamp: number) => void | Promise<void>;
     onActivated?: (available: boolean) => void;
     onFatal?: () => void;
 }
@@ -40,6 +40,7 @@ export default function Webcam({
     const [webcam, setWebcam] = useState<WebcamClass | null>(null);
     const webcamRef = useRef<HTMLCanvasElement>(null);
     const requestRef = useRef(-1);
+    const busyRef = useRef(false);
     const previousTimeRef = useRef(0);
     const loopRef = useRef<(n: number) => Promise<void>>();
     const [multiple, setMultiple] = useState(false);
@@ -55,7 +56,11 @@ export default function Webcam({
                 }
                 return;
             }
-            if (webcam && webcam.canvas) {
+            if (loopRef.current) {
+                requestRef.current = window.requestAnimationFrame(loopRef.current);
+            }
+            if (webcam && webcam.canvas && !busyRef.current) {
+                busyRef.current = true;
                 webcam.update();
                 const actualInterval = interval !== undefined ? interval : 1000.0;
 
@@ -65,7 +70,7 @@ export default function Webcam({
 
                 if (capture && onCapture && timestamp - previousTimeRef.current >= actualInterval) {
                     if (direct && webcam.canvas) {
-                        await onCapture(webcam.canvas);
+                        await onCapture(webcam.canvas, timestamp);
                     } else {
                         const newImage = document.createElement('canvas');
                         newImage.width = webcam.canvas.width;
@@ -73,24 +78,20 @@ export default function Webcam({
                         const context = newImage.getContext('2d');
                         if (!context) console.error('Failed to get context');
                         context?.drawImage(webcam.canvas, 0, 0);
-                        await onCapture(newImage);
+                        await onCapture(newImage, timestamp);
                     }
                     previousTimeRef.current = timestamp;
                 }
 
-                const ctx = webcamRef.current?.getContext('2d');
-                if (ctx) {
-                    //ctx.drawImage(webcam.canvas, 0, 0);
-                    if (onPostprocess && webcamRef.current) {
-                        await onPostprocess(webcam.canvas, webcamRef.current);
-                    } else if (webcamRef.current) {
+                if (onPostprocess && webcamRef.current) {
+                    await onPostprocess(webcam.canvas, webcamRef.current, timestamp);
+                } else if (webcamRef.current) {
+                    const ctx = webcamRef.current?.getContext('2d');
+                    if (ctx) {
                         ctx.drawImage(webcam.canvas, 0, 0);
                     }
                 }
-            }
-
-            if (loopRef.current) {
-                requestRef.current = window.requestAnimationFrame(loopRef.current);
+                busyRef.current = false;
             }
         };
 
