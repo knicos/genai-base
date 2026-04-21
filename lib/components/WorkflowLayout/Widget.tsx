@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import MTextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
 import { useTranslation } from 'react-i18next';
-import { useLinesUpdate } from './svgContext';
+import { useWorkflowContext } from './svgContext';
 
 interface Props extends React.HTMLProps<HTMLDivElement> {
     title?: string;
@@ -54,7 +54,7 @@ export function Widget({
     const firstShow = useRef(true);
     const ref = useRef<HTMLElement>(null);
     const editRef = useRef<HTMLDivElement>(null);
-    const updateLines = useLinesUpdate();
+    const workflowContext = useWorkflowContext();
 
     const classToUse = disabled ? style.widgetDisabled : active ? style.widgetActive : style.widget;
 
@@ -108,8 +108,10 @@ export function Widget({
     }, [title, setTitle]);
 
     useEffect(() => {
-        if (updateLines) updateLines();
-    }, [activated, updateLines]);
+        if (ref.current && workflowContext && dataWidget) {
+            return workflowContext.registerElement(dataWidget, ref.current);
+        }
+    }, [dataWidget, workflowContext]);
 
     return (
         <section

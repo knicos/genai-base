@@ -112,6 +112,45 @@ export const WorkflowActivated: Story = () => (
     </WorkflowLayout>
 );
 
+function SizingWidget(props: React.ComponentProps<typeof Widget>) {
+    const [active, setActive] = useState(false);
+    useEffect(() => {
+        const handle = setInterval(() => setActive((prev) => !prev), 1000);
+        return () => clearInterval(handle);
+    }, []);
+
+    return (
+        <Widget
+            {...props}
+            style={{ width: active ? '200px' : '100px', height: active ? '200px' : '100px' }}
+        />
+    );
+}
+
+export const WorkflowSizing: Story = () => (
+    <WorkflowLayout
+        connections={[
+            { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
+        ]}
+    >
+        <SizingWidget
+            dataWidget="w1"
+            title="Test 1"
+            headerColour="pink"
+            style={{ marginRight: '100px' }}
+        >
+            Hello
+        </SizingWidget>
+        <Widget
+            dataWidget="w2"
+            title="Test 2"
+            activated={true}
+        >
+            World
+        </Widget>
+    </WorkflowLayout>
+);
+
 export const WorkflowAnnotated: Story = () => (
     <WorkflowLayout
         connections={[

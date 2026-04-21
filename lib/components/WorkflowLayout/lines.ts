@@ -37,6 +37,22 @@ export function extractNodesFromElements(div: HTMLElement, initial?: Map<string,
     return result;
 }
 
+export function createNodesFromElements(elements: HTMLElement[], initial?: INode[]) {
+    const result: INode[] = initial || [];
+
+    for (let i = 0; i < elements.length; ++i) {
+        const child = elements[i] as HTMLElement;
+
+        const active = child.getAttribute('data-active') !== 'false';
+        const width = child.offsetWidth;
+        const height = child.offsetHeight;
+        if (isTest || (width > 0 && height > 0)) {
+            result.push({ x: child.offsetLeft, y: child.offsetTop, width, height, id: child.id || 'noid', active });
+        }
+    }
+    return result;
+}
+
 export type ConnectionPoint = 'left' | 'right' | 'top' | 'bottom';
 
 export interface IConnection {
@@ -64,26 +80,26 @@ export function generateLines(data: Map<string, INode[]>, connections: IConnecti
                         connection.startPoint === 'left'
                             ? input.x
                             : connection.startPoint === 'right'
-                            ? input.x + input.width
-                            : input.x + input.width / 2 + (connection.startOffset || 0) * (input.width / 2),
+                              ? input.x + input.width
+                              : input.x + input.width / 2 + (connection.startOffset || 0) * (input.width / 2),
                     x2:
                         connection.endPoint === 'left'
                             ? output.x
                             : connection.endPoint === 'right'
-                            ? output.x + output.width
-                            : output.x + output.width / 2 + (connection.endOffset || 0) * (output.width / 2),
+                              ? output.x + output.width
+                              : output.x + output.width / 2 + (connection.endOffset || 0) * (output.width / 2),
                     y1:
                         connection.startPoint === 'top'
                             ? input.y
                             : connection.startPoint === 'bottom'
-                            ? input.y + input.height
-                            : input.y + input.height / 2 + (connection.startOffset || 0) * (input.height / 2),
+                              ? input.y + input.height
+                              : input.y + input.height / 2 + (connection.startOffset || 0) * (input.height / 2),
                     y2:
                         connection.endPoint === 'top'
                             ? output.y
                             : connection.endPoint === 'bottom'
-                            ? output.y + output.height
-                            : output.y + output.height / 2 + (connection.endOffset || 0) * (output.height / 2),
+                              ? output.y + output.height
+                              : output.y + output.height / 2 + (connection.endOffset || 0) * (output.height / 2),
                     direction:
                         connection.startPoint === 'top' || connection.startPoint === 'bottom'
                             ? 'vertical'

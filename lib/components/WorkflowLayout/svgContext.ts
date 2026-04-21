@@ -1,9 +1,14 @@
 import { createContext, useContext } from 'react';
 
-export const LinesUpdateContext = createContext<(() => void) | undefined>(undefined);
+export interface WorkflowContext {
+    registerElement: (id: string, element: HTMLElement) => () => void;
+    updateLines: () => void;
+}
 
-export function useLinesUpdate() {
+export const LinesUpdateContext = createContext<WorkflowContext | undefined>(undefined);
+
+export function useWorkflowContext() {
     const ctx = useContext(LinesUpdateContext);
-    if (!ctx) throw new Error('useLinesUpdate must be used within WorkflowLayout');
+    if (!ctx) throw new Error('useWorkflowContext must be used within WorkflowLayout');
     return ctx;
 }
