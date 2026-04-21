@@ -2,7 +2,8 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { createNodesFromElements, generateLines, IConnection, INode } from './lines';
 import SvgLayer, { ILine } from './SvgLayer';
 import style from './style.module.css';
-import { LinesUpdateContext, WorkflowContext } from './svgContext';
+import { LinesUpdateContext, WorkflowContext, WorkflowEvents } from './svgContext';
+import EE from 'eventemitter3';
 
 interface Props extends PropsWithChildren {
     connections: IConnection[];
@@ -22,8 +23,9 @@ export default function WorkflowLayout({ children, connections, columns, ignored
         },
         updateLines: () => {},
         elements: elementsRef.current,
+        events: new EE<WorkflowEvents>(),
     });
-    const rafId = useRef<number>(-1);
+    const rafId = useRef<number | null>(null);
 
     if (!observer.current) {
         observer.current = new ResizeObserver(() => {
@@ -39,6 +41,7 @@ export default function WorkflowLayout({ children, connections, columns, ignored
         if (observer.current) {
             observer.current.observe(element);
         }
+        contextRef.current.events.emit('elementRegistered', id, element);
         contextRef.current.updateLines();
         return () => {
             elementsRef.current.get(id)?.delete(element);
@@ -48,12 +51,13 @@ export default function WorkflowLayout({ children, connections, columns, ignored
             if (observer.current) {
                 observer.current.unobserve(element);
             }
+            contextRef.current.events.emit('elementUnregistered', id, element);
             contextRef.current.updateLines();
         };
     };
 
     contextRef.current.updateLines = () => {
-        if (rafId.current !== -1) return;
+        if (rafId.current !== null) return;
 
         rafId.current = requestAnimationFrame(() => {
             try {
@@ -65,8 +69,9 @@ export default function WorkflowLayout({ children, connections, columns, ignored
                 const lines = generateLines(nodes, connections);
 
                 setLines(lines);
+                contextRef.current.events.emit('linesUpdated', lines, connections);
             } finally {
-                rafId.current = -1;
+                rafId.current = null;
             }
         });
     };
@@ -95,7 +100,7 @@ export default function WorkflowLayout({ children, connections, columns, ignored
 
             return () => {
                 observer.current?.disconnect();
-                if (rafId.current !== -1) {
+                if (rafId.current !== null) {
                     cancelAnimationFrame(rafId.current);
                 }
 

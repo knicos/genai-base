@@ -20,8 +20,6 @@ const CURVE = 0.4;
 const ANNOTATION_PADDING = 40;
 
 export default function SvgLayer({ lines }: Props) {
-    // const activeLines = useRecoilValue(activeNodes);
-
     return (
         <svg
             className={style.svglayer}
