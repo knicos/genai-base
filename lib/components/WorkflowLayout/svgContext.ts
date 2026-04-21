@@ -3,6 +3,7 @@ import { createContext, useContext } from 'react';
 export interface WorkflowContext {
     registerElement: (id: string, element: HTMLElement) => () => void;
     updateLines: () => void;
+    elements: Map<string, Set<HTMLElement>>;
 }
 
 export const LinesUpdateContext = createContext<WorkflowContext | undefined>(undefined);

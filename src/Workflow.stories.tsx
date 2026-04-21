@@ -1,7 +1,7 @@
 import { Story, StoryDefault } from '@ladle/react';
 import { Theme } from './decorators';
 import './style.css';
-import { Widget, WorkflowLayout } from '@base/main';
+import { IConnection, Widget, WorkflowLayout } from '@base/main';
 import { useEffect, useState } from 'react';
 
 export default {
@@ -44,6 +44,57 @@ export const WorkflowOffsets: Story = () => (
             dataWidget="w2"
             title="Test 2"
             data-active="false"
+        >
+            World
+        </Widget>
+    </WorkflowLayout>
+);
+
+const largeConnections: IConnection[] = [
+    { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: 0.5, endOffset: 0.4 },
+    { start: 'w1', end: 'w3', startPoint: 'right', endPoint: 'left' },
+    { start: 'w1', end: 'w4', startPoint: 'right', endPoint: 'left' },
+    { start: 'w4', end: 'w5', startPoint: 'right', endPoint: 'left' },
+];
+
+export const WorkflowLarge: Story = () => (
+    <WorkflowLayout connections={largeConnections}>
+        <Widget
+            dataWidget="w1"
+            title="Test 1"
+            headerColour="pink"
+            data-active="false"
+        >
+            Hello
+        </Widget>
+        <Widget
+            dataWidget="w2"
+            title="Test 2"
+            data-active="false"
+        >
+            World
+        </Widget>
+        <Widget
+            dataWidget="w3"
+            title="Test 2"
+            data-active="false"
+            style={{ marginTop: '-150px' }}
+        >
+            World
+        </Widget>
+        <Widget
+            dataWidget="w4"
+            title="Test 2"
+            data-active="false"
+            style={{ marginTop: '100px' }}
+        >
+            World
+        </Widget>
+        <Widget
+            dataWidget="w5"
+            title="Test 2"
+            data-active="false"
+            style={{ marginTop: '150px' }}
         >
             World
         </Widget>
@@ -102,6 +153,40 @@ export const WorkflowActivated: Story = () => (
         >
             Hello
         </AnimatedWidget>
+        <Widget
+            dataWidget="w2"
+            title="Test 2"
+            activated={true}
+        >
+            World
+        </Widget>
+    </WorkflowLayout>
+);
+
+function FlashWidget(props: React.ComponentProps<typeof Widget>) {
+    const [active, setActive] = useState(false);
+    useEffect(() => {
+        const handle = setInterval(() => setActive((prev) => !prev), 1000);
+        return () => clearInterval(handle);
+    }, []);
+
+    return active ? <Widget {...props} /> : null;
+}
+
+export const WorkflowFlash: Story = () => (
+    <WorkflowLayout
+        connections={[
+            { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
+        ]}
+    >
+        <FlashWidget
+            dataWidget="w1"
+            title="Test 1"
+            headerColour="pink"
+            style={{ marginRight: '100px' }}
+        >
+            Hello
+        </FlashWidget>
         <Widget
             dataWidget="w2"
             title="Test 2"

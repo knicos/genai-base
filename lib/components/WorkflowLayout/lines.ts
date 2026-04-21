@@ -41,13 +41,17 @@ export function createNodesFromElements(elements: HTMLElement[], initial?: INode
     const result: INode[] = initial || [];
 
     for (let i = 0; i < elements.length; ++i) {
-        const child = elements[i] as HTMLElement;
+        try {
+            const child = elements[i] as HTMLElement;
 
-        const active = child.getAttribute('data-active') !== 'false';
-        const width = child.offsetWidth;
-        const height = child.offsetHeight;
-        if (isTest || (width > 0 && height > 0)) {
-            result.push({ x: child.offsetLeft, y: child.offsetTop, width, height, id: child.id || 'noid', active });
+            const active = child.getAttribute('data-active') !== 'false';
+            const width = child.offsetWidth;
+            const height = child.offsetHeight;
+            if (isTest || (width > 0 && height > 0)) {
+                result.push({ x: child.offsetLeft, y: child.offsetTop, width, height, id: child.id || 'noid', active });
+            }
+        } catch (e) {
+            console.error('Error processing element', elements[i], e);
         }
     }
     return result;

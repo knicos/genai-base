@@ -21,6 +21,7 @@ export default function WorkflowLayout({ children, connections, columns, ignored
             return () => {};
         },
         updateLines: () => {},
+        elements: elementsRef.current,
     });
     const rafId = useRef<number>(-1);
 
@@ -55,15 +56,18 @@ export default function WorkflowLayout({ children, connections, columns, ignored
         if (rafId.current !== -1) return;
 
         rafId.current = requestAnimationFrame(() => {
-            const nodes = new Map<string, INode[]>();
-            for (const [id, elements] of elementsRef.current.entries()) {
-                const currentNodes = createNodesFromElements(Array.from(elements));
-                nodes.set(id, currentNodes);
-            }
-            const lines = generateLines(nodes, connections);
+            try {
+                const nodes = new Map<string, INode[]>();
+                for (const [id, elements] of elementsRef.current.entries()) {
+                    const currentNodes = createNodesFromElements(Array.from(elements));
+                    nodes.set(id, currentNodes);
+                }
+                const lines = generateLines(nodes, connections);
 
-            setLines(lines);
-            rafId.current = -1;
+                setLines(lines);
+            } finally {
+                rafId.current = -1;
+            }
         });
     };
 
