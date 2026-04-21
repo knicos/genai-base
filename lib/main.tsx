@@ -44,6 +44,7 @@ export {
     type ILine,
     generateLines,
     extractNodesFromElements,
+    useWorkflowContext,
 } from './components/WorkflowLayout';
 export { default as LangSelect } from './components/LangSelect/LangSelect';
 export { IconMenu, IconMenuInline, IconMenuItem, Spacer } from './components/IconMenu';
