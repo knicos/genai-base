@@ -70,6 +70,8 @@ export default function WorkflowLayout({ children, connections, columns, ignored
 
                 setLines(lines);
                 contextRef.current.events.emit('linesUpdated', lines, connections);
+            } catch (e) {
+                console.error('Error updating lines', e);
             } finally {
                 rafId.current = null;
             }
@@ -102,6 +104,7 @@ export default function WorkflowLayout({ children, connections, columns, ignored
                 observer.current?.disconnect();
                 if (rafId.current !== null) {
                     cancelAnimationFrame(rafId.current);
+                    rafId.current = null;
                 }
 
                 mutObserver.current?.disconnect();

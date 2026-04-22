@@ -50,7 +50,9 @@ export default defineConfig({
                 '@emotion/react',
                 '@emotion/styled',
                 'react-i18next',
-                'recoil',
+                '@mui/x-charts',
+                'react-router-dom',
+                'react-router',
             ],
             output: {
                 assetFileNames: 'assets/[name][extname]',
