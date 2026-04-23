@@ -29,7 +29,7 @@ export const theme = createTheme({
         error: {
             main: '#f44336',
             light: '#f44336',
-            dark: '#e57373',
+            dark: '#ED9C9C',
         },
     },
     typography: {
@@ -73,9 +73,9 @@ export const darkTheme = createTheme({
             dark: '#a4bfe2',
         },
         error: {
-            main: '#e57373',
+            main: '#ED9C9C',
             light: '#f44336',
-            dark: '#e57373',
+            dark: '#ED9C9C',
         },
     },
     typography: {
