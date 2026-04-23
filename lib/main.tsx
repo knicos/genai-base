@@ -14,7 +14,7 @@ export { default as Peer2Peer } from './services/peer2peer/Peer2Peer';
 export { useID } from './hooks/id';
 export { useOnlyOnce } from './hooks/onlyOnce';
 export { default as useRandom } from './hooks/random';
-export { theme } from './style/theme';
+export { theme, darkTheme } from './style/theme';
 export { default as randomId } from './util/randomId';
 export {
     cropTo,
