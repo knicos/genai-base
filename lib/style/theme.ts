@@ -39,6 +39,14 @@ export const theme = createTheme({
     },
 });
 
+export const darkChartPalette = isTest
+    ? ['#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']
+    : [colours.chartDark1, colours.chartDark2, colours.chartDark3, colours.chartDark4, colours.chartDark5, colours.chartDark6, colours.chartDark7, colours.chartDark8];
+
+export const lightChartPalette = isTest
+    ? ['#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff', '#fff']
+    : [colours.chartLight1, colours.chartLight2, colours.chartLight3, colours.chartLight4, colours.chartLight5, colours.chartLight6, colours.chartLight7, colours.chartLight8];
+
 export const darkTheme = createTheme({
     palette: {
         mode: 'dark',
