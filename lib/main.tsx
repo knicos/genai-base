@@ -54,3 +54,4 @@ export { default as Application } from './components/Application/Application';
 export { default as Feedback } from './components/Feedback/Feedback';
 export { default as Help } from './components/Help/Help';
 export { default as InfoPop } from './components/InfoPop/InfoPop';
+export { default as BoxButton } from './components/BoxButton/BoxButton';
