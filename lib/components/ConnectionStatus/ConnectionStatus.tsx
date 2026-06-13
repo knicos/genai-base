@@ -29,7 +29,6 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
     const streamRef = useRef<MediaStream | undefined>();
     const [status, setStatus] = useState<PeerStatus>('connecting');
     const [quality, setQuality] = useState(0);
-    const [, setP2PCheck] = useState(false);
     //const [error, setError] = useState<PeerErrorType>('none');
     const [failed, setFailed] = useState(false);
 
@@ -60,6 +59,21 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
             });
         }
     }, [ice, setIce, api, appName]);
+
+    // Clear ICE servers before they expire
+    useEffect(() => {
+        if (ice) {
+            const timeout = setTimeout(
+                () => {
+                    setIce(undefined);
+                },
+                ice.expiresOn.getTime() - Date.now() - 60000
+            );
+            return () => {
+                clearTimeout(timeout);
+            };
+        }
+    }, [ice, setIce]);
 
     useEffect(() => {
         if (status !== 'ready') {
@@ -115,9 +129,12 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
 
     useEffect(() => {
         if (ready && peer && !noCheck && peer.code) {
-            checkP2P(checkURL || api, peer.code).then((res) => {
-                setP2PCheck(res);
-            });
+            const timeout = setTimeout(() => {
+                checkP2P(checkURL || api, peer.code);
+            }, 100);
+            return () => {
+                clearTimeout(timeout);
+            };
         }
     }, [ready, peer, api, checkURL, noCheck]);
     return (

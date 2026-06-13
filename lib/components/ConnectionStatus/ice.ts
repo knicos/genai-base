@@ -21,7 +21,12 @@ export function getRTConfig(api: string, appName: string, resolve: (value: Commu
         .then((response) => {
             if (response.ok) {
                 retryCount = 0;
-                response.json().then(resolve);
+                response.json().then((data) => {
+                    if (data.expiresOn) {
+                        data.expiresOn = new Date(data.expiresOn);
+                    }
+                    resolve(data);
+                });
             } else setTimeout(() => getRTConfig(api, appName, resolve), expBackoff(retryCount++, 5));
         })
         .catch(() => {
