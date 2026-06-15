@@ -19,9 +19,10 @@ interface Props {
     appName: string;
     visibility?: number;
     noCheck?: boolean;
+    noUserMedia?: boolean;
 }
 
-export default function ConnectionStatus({ api, checkURL, appName, visibility, noCheck }: Props) {
+export default function ConnectionStatus({ api, checkURL, appName, visibility, noCheck, noUserMedia }: Props) {
     const { t } = useTranslation();
     const peer = usePeerObject();
     const [ice, setIce] = useAtom(iceConfig);
@@ -91,6 +92,10 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
     // Get permissions for webRTC
     useEffect(() => {
         if (ice && webrtc === 'unset') {
+            if (noUserMedia) {
+                setWebRTC('full');
+                return;
+            }
             if (navigator?.mediaDevices) {
                 navigator.mediaDevices
                     .getUserMedia({ video: true })
@@ -115,7 +120,7 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
                 setWebRTC('relay');
             }
         }
-    }, [ice, webrtc, setWebRTC]);
+    }, [ice, webrtc, setWebRTC, noUserMedia]);
 
     // Stop the webcam after connection is ready (for Firefox)
     useEffect(() => {
