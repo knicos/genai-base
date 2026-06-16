@@ -1,0 +1,208 @@
+@value backgroundDark2, backgroundDark3, secondaryLight from "../../../public/colours.module.css";
+
+.container {
+    position: relative;
+    display: flex;
+    flex-grow: 1;
+    align-self: stretch;
+    align-items: center;
+    overflow: hidden;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    justify-content: center;
+}
+
+.itemList {
+    display: flex;
+    overflow-x: auto;
+    scrollbar-width: none;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.itemList::-webkit-scrollbar {
+    display: none;
+}
+
+.homeButton {
+    color: white;
+    text-decoration: none;
+    font-size: 1.6rem;
+    margin-right: 1rem;
+    display: flex;
+    background: #333;
+    border: 0;
+    border-radius: 50%;
+    padding: 0.5rem;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.homeButton.selected {
+    background: white;
+    color: black;
+}
+
+.homeButton:hover {
+    background: #222;
+}
+
+.homeButton.selected:hover {
+    background: white;
+}
+
+.homeButton:disabled,
+.homeButton[aria-disabled='true'] {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.bgBar {
+    flex-shrink: 0;
+    min-width: 20px;
+    height: 2px;
+    background: secondaryLight;
+}
+
+.item {
+    flex-shrink: 0;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #333;
+    padding: 0.5rem;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    font: inherit;
+    position: relative;
+    user-select: none;
+    cursor: pointer;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
+}
+
+.item:hover {
+    background: #222;
+}
+
+.itemList a {
+    color: white;
+    text-decoration: none;
+}
+
+.item svg {
+    margin-left: 0.3rem;
+}
+
+.item:disabled,
+.item[aria-disabled='true'] {
+    cursor: default;
+    opacity: 0.5;
+}
+
+.item.selected {
+    background: white;
+    color: black;
+}
+
+.item.selected:hover {
+    background: white;
+}
+
+.item::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: -6px;
+    top: calc(50% - 8px);
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 12px solid secondaryLight;
+    border-radius: 0;
+    background: none;
+}
+
+.item:first-child::before {
+    display: none;
+}
+
+.icon {
+    color: var(--info-light);
+}
+
+.selected .icon {
+    color: var(--info);
+}
+
+.complete .icon {
+    color: var(--success-light);
+}
+
+.complete.selected .icon {
+    color: var(--success);
+}
+
+.warning .icon {
+    color: var(--error-light);
+}
+
+.warning.selected .icon {
+    color: var(--error);
+}
+
+.blocked .icon,
+.upcoming .icon {
+    color: backgroundDark2;
+}
+
+.blocked.selected .icon,
+.upcoming.selected .icon {
+    color: backgroundDark3;
+}
+
+.itemText {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.arrow {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    width: 3rem;
+    height: 100%;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.7;
+    transition:
+        opacity 0.3s ease,
+        background-color 0.3s ease,
+        font-size 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container:hover .arrow {
+    opacity: 1;
+}
+
+.arrow:hover {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 3.5rem;
+}
+
+.arrow.left {
+    left: 0;
+}
+
+.arrow.right {
+    right: 0;
+}

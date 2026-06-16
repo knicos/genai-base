@@ -56,3 +56,11 @@ export { default as Feedback } from './components/Feedback/Feedback';
 export { default as Help } from './components/Help/Help';
 export { default as InfoPop } from './components/InfoPop/InfoPop';
 export { default as BoxButton } from './components/BoxButton/BoxButton';
+export { default as StageBar } from './components/StageBar/StageBar';
+export type {
+    StageBarHomeButton,
+    StageBarItem,
+    StageBarItemStatus,
+    StageBarPopoverTheme,
+    StageBarProps,
+} from './components/StageBar/StageBar';
