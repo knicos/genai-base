@@ -70,28 +70,37 @@ export default function StageBar({
     const [hoveredItem, setHoveredItem] = useState<StageBarItem | null>(null);
 
     useEffect(() => {
-        const h = () => {
+        const updateMeasurements = () => {
             if (containerRef.current) {
                 const w = containerRef.current.getBoundingClientRect().width;
                 setWidth(w);
             }
-            if (listRef.current) {
+            if (listRef.current && items.length > 0) {
                 const w = listRef.current.scrollWidth;
                 setItemWidth(w / items.length);
             }
         };
-        h();
-        window.addEventListener('resize', h);
-        return () => window.removeEventListener('resize', h);
+        updateMeasurements();
+
+        const observer = new ResizeObserver(updateMeasurements);
+        if (containerRef.current) observer.observe(containerRef.current);
+        if (listRef.current) observer.observe(listRef.current);
+
+        return () => observer.disconnect();
     }, [items.length]);
 
     const numVisible = Math.floor((width + 20) / (itemWidth + 20));
+    const maxOffset = Math.max(0, items.length - numVisible);
     const hasLeftArrow = numVisible > 1 && offset > 0;
     const hasRightArrow = numVisible > 1 && offset + numVisible < items.length;
 
     const handleOffsetChange = (newOffset: number) => {
-        setOffset((o) => Math.max(0, Math.min(items.length - numVisible, o + newOffset)));
+        setOffset((o) => Math.max(0, Math.min(maxOffset, o + newOffset)));
     };
+
+    useEffect(() => {
+        setOffset((o) => Math.min(o, maxOffset));
+    }, [maxOffset]);
 
     useEffect(() => {
         if (listRef.current) {
