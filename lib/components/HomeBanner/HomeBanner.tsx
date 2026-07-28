@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import LinkButton from './LinkButton';
 import style from './style.module.css';
 import GitHubIcon from '@mui/icons-material/GitHub';
@@ -5,8 +6,8 @@ import SchoolIcon from '@mui/icons-material/School';
 
 interface Props {
     logoUrl?: string;
-    title: string;
-    subtitle: string;
+    title: string | ReactNode;
+    subtitle: string | ReactNode;
     githubUrl?: string;
     githubLabel?: string;
     teachingMaterialsUrl?: string;
