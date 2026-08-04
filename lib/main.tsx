@@ -64,3 +64,4 @@ export type {
     StageBarPopoverTheme,
     StageBarProps,
 } from './components/StageBar/StageBar';
+export { default as ProgressRing } from './components/ProgressRing/ProgressRing';
