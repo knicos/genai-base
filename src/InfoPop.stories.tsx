@@ -1,13 +1,13 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { InfoPop } from '@base/main';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const InfoPopStory: Story = () => (
+export const InfoPopStory: StoryFn = () => (
     <section>
         <InfoPop open>Hello world</InfoPop>
     </section>

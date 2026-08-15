@@ -1,13 +1,13 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { Help } from '@base/main';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const HelpInplaceStory: Story = () => (
+export const HelpInplaceStory: StoryFn = () => (
     <section>
         <Help
             inplace
@@ -18,7 +18,7 @@ export const HelpInplaceStory: Story = () => (
     </section>
 );
 
-export const HelpKeepOpenStory: Story = () => (
+export const HelpKeepOpenStory: StoryFn = () => (
     <section>
         <Help
             inplace
@@ -30,7 +30,7 @@ export const HelpKeepOpenStory: Story = () => (
     </section>
 );
 
-export const HelpKeepOpenRightStory: Story = () => (
+export const HelpKeepOpenRightStory: StoryFn = () => (
     <section>
         <Help
             inplace
@@ -43,7 +43,7 @@ export const HelpKeepOpenRightStory: Story = () => (
     </section>
 );
 
-export const HelpKeepOpenLeftStory: Story = () => (
+export const HelpKeepOpenLeftStory: StoryFn = () => (
     <section style={{ marginLeft: 300 }}>
         <Help
             inplace
@@ -56,7 +56,7 @@ export const HelpKeepOpenLeftStory: Story = () => (
     </section>
 );
 
-export const HelpKeepOpenTopStory: Story = () => (
+export const HelpKeepOpenTopStory: StoryFn = () => (
     <section style={{ marginTop: 300 }}>
         <Help
             inplace
@@ -69,13 +69,13 @@ export const HelpKeepOpenTopStory: Story = () => (
     </section>
 );
 
-export const HelpBoxStory: Story = () => (
+export const HelpBoxStory: StoryFn = () => (
     <section>
         <Help message="Some help about hello">Hello world</Help>
     </section>
 );
 
-export const HelpBoxKeepOpenStory: Story = () => (
+export const HelpBoxKeepOpenStory: StoryFn = () => (
     <section>
         <Help
             keepOpen
@@ -86,7 +86,7 @@ export const HelpBoxKeepOpenStory: Story = () => (
     </section>
 );
 
-export const HelpDark: Story = () => (
+export const HelpDark: StoryFn = () => (
     <section style={{ background: '#444', padding: '2rem', color: 'white' }}>
         <Help
             keepOpen
@@ -99,7 +99,7 @@ export const HelpDark: Story = () => (
     </section>
 );
 
-export const HelpBoxBottomStory: Story = () => (
+export const HelpBoxBottomStory: StoryFn = () => (
     <section>
         <Help
             keepOpen

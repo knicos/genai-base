@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import { defineConfig, globalIgnores } from 'eslint/config';
 import { fixupConfigRules, fixupPluginRules } from '@eslint/compat';
 import typescriptEslint from '@typescript-eslint/eslint-plugin';
@@ -16,49 +19,46 @@ const compat = new FlatCompat({
     allConfig: js.configs.all,
 });
 
-export default defineConfig([
-    globalIgnores(['dist/*']),
-    {
-        extends: fixupConfigRules(
-            compat.extends(
-                'eslint:recommended',
-                'plugin:@typescript-eslint/recommended',
-                'plugin:react/recommended',
-                'plugin:react-hooks/recommended'
-            )
-        ),
+export default defineConfig([globalIgnores(['dist/*']), {
+    extends: fixupConfigRules(
+        compat.extends(
+            'eslint:recommended',
+            'plugin:@typescript-eslint/recommended',
+            'plugin:react/recommended',
+            'plugin:react-hooks/recommended'
+        )
+    ),
 
-        plugins: {
-            '@typescript-eslint': fixupPluginRules(typescriptEslint),
+    plugins: {
+        '@typescript-eslint': fixupPluginRules(typescriptEslint),
+    },
+
+    languageOptions: {
+        globals: {
+            ...globals.browser,
+            ...globals.node,
         },
 
-        languageOptions: {
-            globals: {
-                ...globals.browser,
-                ...globals.node,
+        parser: tsParser,
+        ecmaVersion: 2020,
+        sourceType: 'module',
+
+        parserOptions: {
+            ecmaFeatures: {
+                jsx: true,
             },
-
-            parser: tsParser,
-            ecmaVersion: 2020,
-            sourceType: 'module',
-
-            parserOptions: {
-                ecmaFeatures: {
-                    jsx: true,
-                },
-            },
-        },
-
-        settings: {
-            react: {
-                version: 'detect',
-            },
-        },
-
-        rules: {
-            'react/react-in-jsx-scope': 'off',
-            'react-hooks/refs': 'off',
-            'react-hooks/set-state-in-effect': 'off',
         },
     },
-]);
+
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
+
+    rules: {
+        'react/react-in-jsx-scope': 'off',
+        'react-hooks/refs': 'off',
+        'react-hooks/set-state-in-effect': 'off',
+    },
+}, ...storybook.configs["flat/recommended"]]);

@@ -3,3 +3,5 @@ dist
 .env
 coverage
 tsconfig.build.*
+*storybook.log
+storybook-static

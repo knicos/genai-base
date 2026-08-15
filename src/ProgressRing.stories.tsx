@@ -1,14 +1,17 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import ProgressRing from '@base/components/ProgressRing/ProgressRing';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const ProgressRingStory: Story = () => (
+export const ProgressRingStory: StoryFn = () => (
     <section>
-        <ProgressRing segments={6} completed={4}/>
+        <ProgressRing
+            segments={6}
+            completed={4}
+        />
     </section>
 );

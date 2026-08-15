@@ -22,6 +22,7 @@ export default function ContentProgress({ status, progress }: Props) {
                     style={{ width: '100%' }}
                     variant={progress === undefined ? 'indeterminate' : 'determinate'}
                     value={progress === undefined ? undefined : Math.floor(progress)}
+                    aria-label={t(`loader.messages.content_${status}`)}
                 />
             </DialogContent>
         </Dialog>

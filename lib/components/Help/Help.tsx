@@ -18,6 +18,7 @@ interface Props extends PropsWithChildren {
     keepOpen?: boolean;
     closeLabel?: string;
     dark?: boolean;
+    ariaLabel?: string;
 }
 
 export default function Help({
@@ -32,6 +33,7 @@ export default function Help({
     keepOpen,
     closeLabel,
     dark,
+    ariaLabel,
     buttonPlacement = 'left',
 }: Props) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -59,6 +61,7 @@ export default function Help({
                     onMouseLeave={!keepOpen ? handleClose : undefined}
                     className={`${style.helpButton} ${inside ? style.helpButtonInside : ''} ${style[buttonPlacement]} ${dark ? style.dark : ''}`}
                     color="inherit"
+                    aria-label={ariaLabel || 'Help'}
                 >
                     <HelpOutlineIcon fontSize="medium" />
                 </IconButton>
@@ -70,6 +73,7 @@ export default function Help({
                     onMouseLeave={!keepOpen ? handleClose : undefined}
                     className={`${style.helpButtonInplace} ${dark ? style.dark : ''}`}
                     color="inherit"
+                    aria-label={ariaLabel || 'Help'}
                 >
                     <HelpOutlineIcon fontSize="medium" />
                 </IconButton>

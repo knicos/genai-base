@@ -1,16 +1,16 @@
 import { Spinner } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const Small: Story = () => <Spinner size="small" />;
-export const Normal: Story = () => <Spinner size="normal" />;
-export const Large: Story = () => <Spinner size="large" />;
-export const Dark: Story = () => (
+export const Small: StoryFn = () => <Spinner size="small" />;
+export const Normal: StoryFn = () => <Spinner size="normal" />;
+export const Large: StoryFn = () => <Spinner size="large" />;
+export const Dark: StoryFn = () => (
     <div style={{ background: '#333', padding: '20px' }}>
         <Spinner
             color="dark"
@@ -18,7 +18,7 @@ export const Dark: Story = () => (
         />
     </div>
 );
-export const Pink: Story = () => (
+export const Pink: StoryFn = () => (
     <div style={{ background: '#e996e9', padding: '20px' }}>
         <Spinner
             color="secondary"
@@ -26,7 +26,7 @@ export const Pink: Story = () => (
         />
     </div>
 );
-export const Disabled: Story = () => (
+export const Disabled: StoryFn = () => (
     <Spinner
         size="normal"
         disabled

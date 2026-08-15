@@ -1,13 +1,13 @@
 import { ContentLoader, ZipData } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const TestContentLoad: Story = () => (
+export const TestContentLoad: StoryFn = () => (
     <ContentLoader
         content={['https://store.gen-ai.fi/somekone/imageSet1b.zip']}
         onLoad={async (d: ZipData) => {

@@ -1,12 +1,14 @@
 import { StageBar, StageBarItem } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { type ReactNode, useState } from 'react';
 import { Theme } from './decorators';
 import './style.css';
 
-export default {
+const meta: Meta = {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
+
+export default meta;
 
 function StoryFrame({ children }: { children: ReactNode }) {
     return (
@@ -78,7 +80,7 @@ const TMItems: StageBarItem[] = [
     { id: 'advanced', label: 'Advanced', status: 'upcoming' },
 ];
 
-export const TeachableMachineTransferLearning: Story = () => {
+export const TeachableMachineTransferLearning: StoryFn = () => {
     const [activeId, setActiveId] = useState('connections');
 
     return (
@@ -93,7 +95,7 @@ export const TeachableMachineTransferLearning: Story = () => {
     );
 };
 
-export const LLMWorkflowBar: Story = () => {
+export const LLMWorkflowBar: StoryFn = () => {
     const [activeId, setActiveId] = useState('data');
 
     return (
@@ -114,7 +116,7 @@ export const LLMWorkflowBar: Story = () => {
     );
 };
 
-export const LLMWorkflowBarConstrained: Story = () => {
+export const LLMWorkflowBarConstrained: StoryFn = () => {
     const [activeId, setActiveId] = useState('data');
 
     return (
@@ -137,7 +139,7 @@ export const LLMWorkflowBarConstrained: Story = () => {
     );
 };
 
-export const Disabled: Story = () => (
+export const Disabled: StoryFn = () => (
     <StoryFrame>
         <StageBar
             ariaLabel="Disabled workflow stages"
@@ -148,7 +150,7 @@ export const Disabled: Story = () => (
     </StoryFrame>
 );
 
-export const ItemsDisabled: Story = () => {
+export const ItemsDisabled: StoryFn = () => {
     const [activeId, setActiveId] = useState('data');
     const items = LLMItems.map((item) =>
         item.id === 'fine-tuning' || item.id === 'deployment' ? { ...item, disabled: true } : item

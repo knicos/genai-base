@@ -53,7 +53,7 @@ export default function QRCode({ url, size, code, label, dialog }: Props) {
             target="_blank"
             rel="noreferrer"
             className={style.link}
-            aria-label={label}
+            aria-label={label || 'QR code link'}
         >
             <canvas
                 data-testid="qr-code-canvas"

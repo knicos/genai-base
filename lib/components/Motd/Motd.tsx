@@ -48,6 +48,7 @@ export default function Motd({ message }: Props) {
             <IconButton
                 color="inherit"
                 onClick={() => setVisible(false)}
+                aria-label="Close"
             >
                 <CloseIcon
                     fontSize="large"

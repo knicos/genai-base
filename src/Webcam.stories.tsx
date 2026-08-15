@@ -1,13 +1,13 @@
 import { Webcam } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const WebcamStory: Story = () => <Webcam size={128} />;
+export const WebcamStory: StoryFn = () => <Webcam size={128} />;
 
 const movement = {
     x: 0,
@@ -41,7 +41,7 @@ function postProcess(input: HTMLCanvasElement, output: HTMLCanvasElement) {
     }
 }
 
-export const WebcamPostStory: Story = () => (
+export const WebcamPostStory: StoryFn = () => (
     <Webcam
         size={128}
         onPostprocess={postProcess}

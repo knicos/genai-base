@@ -1,15 +1,15 @@
 import { LangSelect } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const LanguageSelectLight: Story = () => <LangSelect />;
+export const LanguageSelectLight: StoryFn = () => <LangSelect />;
 
-export const LanguageSelectDark: Story = () => (
+export const LanguageSelectDark: StoryFn = () => (
     <section style={{ backgroundColor: '#333', padding: '1rem' }}>
         <LangSelect dark />
     </section>

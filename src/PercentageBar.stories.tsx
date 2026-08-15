@@ -1,20 +1,20 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { PercentageBar } from '@base/main';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const BasicPercentageBar: Story = () => (
+export const BasicPercentageBar: StoryFn = () => (
     <PercentageBar
         colour="blue"
         value={75}
     />
 );
 
-export const VerticalPercentageBar: Story = () => (
+export const VerticalPercentageBar: StoryFn = () => (
     <PercentageBar
         colour="blue"
         value={75}
@@ -24,7 +24,7 @@ export const VerticalPercentageBar: Story = () => (
     />
 );
 
-export const NoLabelPercentageBar: Story = () => (
+export const NoLabelPercentageBar: StoryFn = () => (
     <PercentageBar
         colour="purple"
         value={75}
@@ -32,7 +32,7 @@ export const NoLabelPercentageBar: Story = () => (
     />
 );
 
-export const VerticalLabelPercentageBar: Story = () => (
+export const VerticalLabelPercentageBar: StoryFn = () => (
     <PercentageBar
         colour="green"
         value={75}

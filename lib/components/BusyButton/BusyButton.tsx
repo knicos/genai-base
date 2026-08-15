@@ -20,7 +20,7 @@ export default forwardRef<HTMLButtonElement, Props>(function BusyButton({ busy, 
                     height: '20px !important',
                 },
             }}
-            startIcon={busy ? <CircularProgress /> : props.startIcon}
+            startIcon={busy ? <CircularProgress aria-label="busy" /> : props.startIcon}
         >
             {props.children}
         </Button>

@@ -1,10 +1,10 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { PieScore } from '@base/main';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const BasicPie: Story = () => <PieScore value={0.5} />;
+export const BasicPie: StoryFn = () => <PieScore value={0.5} />;

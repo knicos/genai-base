@@ -20,7 +20,7 @@
 
 .warn {
     composes: motd;
-    background: bgColourful2;
+    background: #c05702;
 }
 
 .error {

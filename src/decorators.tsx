@@ -1,18 +1,18 @@
 import { theme } from '@base/main';
 import { StyledEngineProvider, ThemeProvider } from '@mui/material/styles';
-import { StoryDecorator } from '@ladle/react';
+import type { Decorator } from '@storybook/react-vite';
 import { Provider } from 'jotai';
 
-export const Theme: StoryDecorator = (Component) => (
+export const Theme: Decorator = (Story) => (
     <StyledEngineProvider injectFirst>
         <ThemeProvider theme={theme}>
-            <Component />
+            <Story />
         </ThemeProvider>
     </StyledEngineProvider>
 );
 
-export const Recoil: StoryDecorator = (Component) => (
+export const Recoil: Decorator = (Story) => (
     <Provider>
-        <Component />
+        <Story />
     </Provider>
 );

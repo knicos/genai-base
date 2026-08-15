@@ -1,5 +1,5 @@
 import { ConnectionStatus, useID } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme, Recoil } from './decorators';
 import './style.css';
 import { useEffect, useRef } from 'react';
@@ -8,9 +8,9 @@ import { Peer, usePeerData, usePeerEvent, usePeerSender } from '@base/hooks/peer
 
 export default {
     decorators: [Theme, Recoil],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const Start: Story = () => {
+export const Start: StoryFn = () => {
     const id = useID(5);
     return (
         <Peer
@@ -28,7 +28,7 @@ export const Start: Story = () => {
     );
 };
 
-export const LoopP2P: Story = () => {
+export const LoopP2P: StoryFn = () => {
     const id = useID(5);
     const counter = useRef(0);
 
@@ -87,7 +87,7 @@ export const LoopP2P: Story = () => {
     );
 };
 
-export const LoopRelay: Story = () => {
+export const LoopRelay: StoryFn = () => {
     const id = useID(5);
     const counter = useRef(0);
 
@@ -148,7 +148,7 @@ export const LoopRelay: Story = () => {
     );
 };
 
-export const LoopSocket: Story = () => {
+export const LoopSocket: StoryFn = () => {
     const id = useID(5);
     const counter = useRef(0);
 
@@ -213,7 +213,7 @@ interface DisabledProps {
     disabled: boolean;
 }
 
-export const Disabled: Story<DisabledProps> = ({ disabled }: DisabledProps) => {
+export const Disabled: StoryFn<DisabledProps> = ({ disabled }: DisabledProps) => {
     const id = useID(5);
 
     return (

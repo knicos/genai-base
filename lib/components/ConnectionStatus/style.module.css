@@ -4,7 +4,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    color: #ed6c02;
+    color: #c05702;
     font-size: 0.9rem;
     pointer-events: none;
     user-select: none;
@@ -14,7 +14,7 @@
 
 .containerConnecting {
     composes: container;
-    color: #ed6c02;
+    color: #c05702;
 }
 
 .containerSuccess {
@@ -24,7 +24,7 @@
 
 .containerMedium {
     composes: container;
-    color: #ed6c02;
+    color: #c05702;
 }
 
 .containerBad {

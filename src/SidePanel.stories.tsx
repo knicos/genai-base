@@ -1,4 +1,4 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { Button, SidePanel } from '@base/main';
@@ -6,9 +6,9 @@ import { useState } from 'react';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const BasicSidePanel: Story = () => (
+export const BasicSidePanel: StoryFn = () => (
     <section
         style={{
             height: '100%',
@@ -24,7 +24,7 @@ export const BasicSidePanel: Story = () => (
     </section>
 );
 
-export const TopSidePanel: Story = () => (
+export const TopSidePanel: StoryFn = () => (
     <section
         style={{
             height: '100%',
@@ -46,7 +46,7 @@ export const TopSidePanel: Story = () => (
     </section>
 );
 
-export const OpenCloseSidePanel: Story = () => {
+export const OpenCloseSidePanel: StoryFn = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <section
@@ -60,7 +60,12 @@ export const OpenCloseSidePanel: Story = () => {
             }}
         >
             <div style={{ flexGrow: 1, backgroundColor: '#dee4e8' }}>
-                <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Open'} Side Panel</Button>
+                <Button
+                    variant="contained"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    {isOpen ? 'Close' : 'Open'} Side Panel
+                </Button>
             </div>
             <SidePanel
                 open={isOpen}
@@ -72,7 +77,7 @@ export const OpenCloseSidePanel: Story = () => {
     );
 };
 
-export const DarkSidePanel: Story = () => {
+export const DarkSidePanel: StoryFn = () => {
     const [isOpen, setIsOpen] = useState(false);
     return (
         <section
@@ -86,7 +91,12 @@ export const DarkSidePanel: Story = () => {
             }}
         >
             <div style={{ flexGrow: 1, backgroundColor: '#dee4e8', overflow: 'auto', minWidth: 0 }}>
-                <Button onClick={() => setIsOpen(!isOpen)}>{isOpen ? 'Close' : 'Open'} Side Panel</Button>
+                <Button
+                    variant="contained"
+                    onClick={() => setIsOpen(!isOpen)}
+                >
+                    {isOpen ? 'Close' : 'Open'} Side Panel
+                </Button>
                 <div style={{ height: '20px', width: 2000 }} />
             </div>
             <SidePanel

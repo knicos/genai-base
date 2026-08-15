@@ -26,10 +26,7 @@ export default function Privacy({ tag, appName, position = 'bottomLeft', style: 
                     {t('about.privacyTitle')}
                 </a>
             )}
-            <div
-                aria-hidden
-                className={style.versionBox}
-            >
+            <div className={style.versionBox}>
                 <a
                     href={`https://github.com/knicos/genai-${appName}/releases/tag/${tag}`}
                     target="_blank"

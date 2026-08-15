@@ -1,13 +1,13 @@
 import { HomeBanner } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const Small: Story = () => (
+export const Small: StoryFn = () => (
     <HomeBanner
         title="Small Banner"
         subtitle="This is a small banner"

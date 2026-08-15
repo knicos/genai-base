@@ -1,4 +1,4 @@
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 import { IConnection, Widget, WorkflowLayout } from '@base/main';
@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const Workflow1: Story = () => (
+export const Workflow1: StoryFn = () => (
     <WorkflowLayout connections={[{ start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left' }]}>
         <Widget
             dataWidget="w1"
@@ -26,7 +26,7 @@ export const Workflow1: Story = () => (
     </WorkflowLayout>
 );
 
-export const WorkflowOffsets: Story = () => (
+export const WorkflowOffsets: StoryFn = () => (
     <WorkflowLayout
         connections={[
             { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
@@ -57,7 +57,7 @@ const largeConnections: IConnection[] = [
     { start: 'w4', end: 'w5', startPoint: 'right', endPoint: 'left' },
 ];
 
-export const WorkflowLarge: Story = () => (
+export const WorkflowLarge: StoryFn = () => (
     <WorkflowLayout connections={largeConnections}>
         <Widget
             dataWidget="w1"
@@ -76,7 +76,7 @@ export const WorkflowLarge: Story = () => (
         </Widget>
         <Widget
             dataWidget="w3"
-            title="Test 2"
+            title="Test 3"
             data-active="false"
             style={{ marginTop: '-150px' }}
         >
@@ -84,7 +84,7 @@ export const WorkflowLarge: Story = () => (
         </Widget>
         <Widget
             dataWidget="w4"
-            title="Test 2"
+            title="Test 4"
             data-active="false"
             style={{ marginTop: '100px' }}
         >
@@ -92,7 +92,7 @@ export const WorkflowLarge: Story = () => (
         </Widget>
         <Widget
             dataWidget="w5"
-            title="Test 2"
+            title="Test 5"
             data-active="false"
             style={{ marginTop: '150px' }}
         >
@@ -101,7 +101,7 @@ export const WorkflowLarge: Story = () => (
     </WorkflowLayout>
 );
 
-export const WorkflowSpaced: Story = () => (
+export const WorkflowSpaced: StoryFn = () => (
     <WorkflowLayout
         connections={[
             { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
@@ -139,7 +139,7 @@ function AnimatedWidget(props: React.ComponentProps<typeof Widget>) {
     );
 }
 
-export const WorkflowActivated: Story = () => (
+export const WorkflowActivated: StoryFn = () => (
     <WorkflowLayout
         connections={[
             { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
@@ -173,7 +173,7 @@ function FlashWidget(props: React.ComponentProps<typeof Widget>) {
     return active ? <Widget {...props} /> : null;
 }
 
-export const WorkflowFlash: Story = () => (
+export const WorkflowFlash: StoryFn = () => (
     <WorkflowLayout
         connections={[
             { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
@@ -212,7 +212,7 @@ function SizingWidget(props: React.ComponentProps<typeof Widget>) {
     );
 }
 
-export const WorkflowSizing: Story = () => (
+export const WorkflowSizing: StoryFn = () => (
     <WorkflowLayout
         connections={[
             { start: 'w1', end: 'w2', startPoint: 'right', endPoint: 'left', startOffset: -0.5, endOffset: 0.5 },
@@ -236,7 +236,7 @@ export const WorkflowSizing: Story = () => (
     </WorkflowLayout>
 );
 
-export const WorkflowAnnotated: Story = () => (
+export const WorkflowAnnotated: StoryFn = () => (
     <WorkflowLayout
         connections={[
             {

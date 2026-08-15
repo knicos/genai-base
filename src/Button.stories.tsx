@@ -1,15 +1,15 @@
 import { BusyButton, Button, LargeButton, VerticalButton } from '@base/main';
-import { Story, StoryDefault } from '@ladle/react';
+import type { Meta, StoryFn } from '@storybook/react-vite';
 import { Theme } from './decorators';
 import './style.css';
 
 export default {
     decorators: [Theme],
-} satisfies StoryDefault;
+} satisfies Meta;
 
-export const ButtonOutline: Story = () => <Button variant="outlined">Hello</Button>;
-export const ButtonContained: Story = () => <Button variant="contained">Hello</Button>;
-export const ButtonSecondary: Story = () => (
+export const ButtonOutline: StoryFn = () => <Button variant="outlined">Hello</Button>;
+export const ButtonContained: StoryFn = () => <Button variant="contained">Hello</Button>;
+export const ButtonSecondary: StoryFn = () => (
     <Button
         variant="contained"
         color="secondary"
@@ -18,7 +18,7 @@ export const ButtonSecondary: Story = () => (
     </Button>
 );
 
-export const Vertical: Story = () => (
+export const Vertical: StoryFn = () => (
     <VerticalButton
         variant="contained"
         color="secondary"
@@ -27,7 +27,7 @@ export const Vertical: Story = () => (
     </VerticalButton>
 );
 
-export const Large: Story = () => (
+export const Large: StoryFn = () => (
     <LargeButton
         variant="contained"
         color="secondary"
@@ -36,7 +36,7 @@ export const Large: Story = () => (
     </LargeButton>
 );
 
-export const Busy: Story = () => (
+export const Busy: StoryFn = () => (
     <BusyButton
         variant="contained"
         color="secondary"
