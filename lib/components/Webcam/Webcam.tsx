@@ -42,7 +42,7 @@ export default function Webcam({
     const requestRef = useRef(-1);
     const busyRef = useRef(false);
     const previousTimeRef = useRef(0);
-    const loopRef = useRef<(n: number) => Promise<void>>();
+    const loopRef = useRef<(n: number) => Promise<void> | undefined>(undefined);
     const [multiple, setMultiple] = useState(false);
     const [facing, setFacing] = useState(false);
 

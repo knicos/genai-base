@@ -23,14 +23,14 @@ stages:
             steps:
                 - task: Cache@2
                   inputs:
-                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      key: 'npm2 | "$(Agent.OS)" | package-lock.json'
                       restoreKeys: |
-                          npm | "$(Agent.OS)"
-                          npm
-                      path: $(System.DefaultWorkingDirectory)/node_modules
+                          npm2 | "$(Agent.OS)"
+                          npm2
+                      path: $(Pipeline.Workspace)/.npm
                   displayName: Cache NPM packages
                 - script: |
-                      npm ci
+                      npm ci --cache $(Pipeline.Workspace)/.npm --prefer-offline
                       npm run lint
     - stage: Build
       dependsOn: Static
@@ -45,15 +45,15 @@ stages:
 
                 - task: Cache@2
                   inputs:
-                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      key: 'npm2 | "$(Agent.OS)" | package-lock.json'
                       restoreKeys: |
-                          npm | "$(Agent.OS)"
-                          npm
-                      path: $(System.DefaultWorkingDirectory)/node_modules
+                          npm2 | "$(Agent.OS)"
+                          npm2
+                      path: $(Pipeline.Workspace)/.npm
                   displayName: Cache NPM packages
 
                 - script: |
-                      npm ci
+                      npm ci --cache $(Pipeline.Workspace)/.npm --prefer-offline
                       npm run build
                   displayName: 'Build'
 
@@ -69,14 +69,14 @@ stages:
                   displayName: 'Install Node.js'
                 - task: Cache@2
                   inputs:
-                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      key: 'npm2 | "$(Agent.OS)" | package-lock.json'
                       restoreKeys: |
-                          npm | "$(Agent.OS)"
-                          npm
-                      path: $(System.DefaultWorkingDirectory)/node_modules
+                          npm2 | "$(Agent.OS)"
+                          npm2
+                      path: $(Pipeline.Workspace)/.npm
                   displayName: Cache NPM packages
                 - script: |
-                      npm ci
+                      npm ci --cache $(Pipeline.Workspace)/.npm --prefer-offline
                       CI=true npm run ci:test
                   displayName: 'Test'
                 - task: PublishTestResults@2
@@ -99,15 +99,15 @@ stages:
             steps:
                 - task: Cache@2
                   inputs:
-                      key: '"npm" | "$(Agent.OS)" | package-lock.json'
+                      key: 'npm2 | "$(Agent.OS)" | package-lock.json'
                       restoreKeys: |
-                          npm | "$(Agent.OS)"
-                          npm
-                      path: $(System.DefaultWorkingDirectory)/node_modules
+                          npm2 | "$(Agent.OS)"
+                          npm2
+                      path: $(Pipeline.Workspace)/.npm
                   displayName: Cache NPM packages
                 - script: |
                       echo -e "\n//registry.npmjs.org/:_authToken=$(NPM_TOKEN)" >> ./.npmrc
-                      npm ci
+                      npm ci --cache $(Pipeline.Workspace)/.npm --prefer-offline
                       npm run build
                       npm version --git-tag-version=false ${BUILD_SOURCEBRANCHNAME}
                       npm publish --access public

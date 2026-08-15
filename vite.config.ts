@@ -1,5 +1,5 @@
 /// <reference types="vitest" />
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import dts from 'vite-plugin-dts';
 import { libInjectCss } from 'vite-plugin-lib-inject-css';
@@ -34,8 +34,8 @@ export default defineConfig({
     },
     resolve: {
         alias: {
-            '@public': resolve(__dirname, './public'),
-            '@base': resolve(__dirname, './lib'),
+            '@public': resolve(import.meta.dirname, './public'),
+            '@base': resolve(import.meta.dirname, './lib'),
         },
     },
     build: {
@@ -74,7 +74,7 @@ export default defineConfig({
             ),
         },
         lib: {
-            entry: resolve(__dirname, 'lib/main.tsx'),
+            entry: resolve(import.meta.dirname, 'lib/main.tsx'),
             formats: ['es'],
         },
     },

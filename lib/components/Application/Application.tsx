@@ -3,7 +3,7 @@ import { StyledEngineProvider } from '@mui/material';
 import { theme as defaultTheme } from '../../style/theme';
 import { createStore, Provider } from 'jotai';
 import { Suspense } from 'react';
-import { RouterProvider } from 'react-router-dom';
+import { RouterProvider } from 'react-router';
 import { RouterProviderProps } from 'react-router';
 import Loading from '../Loading/Loading';
 

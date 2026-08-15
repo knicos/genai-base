@@ -27,7 +27,7 @@ export default function ConnectionStatus({ api, checkURL, appName, visibility, n
     const peer = usePeerObject();
     const [ice, setIce] = useAtom(iceConfig);
     const [webrtc, setWebRTC] = useAtom(webrtcActive);
-    const streamRef = useRef<MediaStream | undefined>();
+    const streamRef = useRef<MediaStream | undefined>(undefined);
     const [status, setStatus] = useState<PeerStatus>('connecting');
     const [quality, setQuality] = useState(0);
     //const [error, setError] = useState<PeerErrorType>('none');

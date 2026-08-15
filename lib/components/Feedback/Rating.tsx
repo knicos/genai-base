@@ -1,6 +1,6 @@
 import style from './Feedback.module.css';
 import StarIcon from '@mui/icons-material/Star';
-import StarOutlineIcon from '@mui/icons-material/StarOutline';
+import StarOutlineIcon from '@mui/icons-material/StarBorder';
 import { useTranslation } from 'react-i18next';
 
 interface Props {

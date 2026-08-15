@@ -14,8 +14,8 @@ interface Props extends PropsWithChildren {
 export default function WorkflowLayout({ children, connections, columns, ignoredColumns }: Props) {
     const [lines, setLines] = useState<ILine[]>([]);
     const wkspaceRef = useRef<HTMLDivElement>(null);
-    const observer = useRef<ResizeObserver>();
-    const mutObserver = useRef<MutationObserver>();
+    const observer = useRef<ResizeObserver | null>(null);
+    const mutObserver = useRef<MutationObserver | null>(null);
     const elementsRef = useRef<Map<string, Set<HTMLElement>>>(new Map());
     const contextRef = useRef<WorkflowContext>({
         registerElement: () => {
